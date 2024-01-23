@@ -29,9 +29,12 @@
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                Preset Parameters
+                Parameters
               </a>
               <ul id="params" class="dropdown-menu">
+                <li><button class="dropdown-item btn btn-secondary" id="ParamEditorButton" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#Paramoffcanvas" aria-controls="Paramoffcanvas">Parameter Editor</button></li>
+                <li><hr class="dropdown-divider"></li>
               </ul>
             </li>
 
@@ -77,24 +80,24 @@
 
     </div>
   </div>
-  <button class="btn btn-secondary" id="XMLEditorButton" type="button" data-bs-toggle="offcanvas"
-    data-bs-target="#XMLoffcanvas" aria-controls="XMLoffcanvas">Parameter editor</button>
 
-  <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="XMLoffcanvas"
+
+  <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="Paramoffcanvas"
     aria-labelledby="offcanvasScrollingLabel">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Parameter editor</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <div id="XMLEditor" class="offcanvas-body">
+    <div id="ParamEditor" class="offcanvas-body">
 
     </div>
     
-    <div>
-      <button class="btn btn-secondary col" id="rawXML" onclick=";"
+    <div class="d-flex justify-content-around">
+      <button class="btn btn-secondary" id="rawParam" data-bs-toggle="offcanvas" onclick=""
+      data-bs-target="#XMLoffcanvas" aria-controls="XMLoffcanvas"
           type="button">XML editor</button>  
 
-      <button class="btn btn-secondary col" id="saveXML" onclick="saveData( XMLParameter , simParamName);"
+      <button class="btn btn-secondary" id="saveParam" onclick="saveData( XMLParameter , simParamName);" 
           type="button">Save XML</button>  
       
       <button class="btn btn-primary " id="ReloadXML"
@@ -105,23 +108,43 @@
     
   </div>
 
+  <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="XMLoffcanvas"
+    aria-labelledby="XMLEditorLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="XMLEditorLabel">XML editor</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div id="XMLEditor" class="offcanvas-body" contenteditable="true">
+    </div>    
+    <div class="d-flex justify-content-around">
+      <button class="btn btn-secondary" id="loadParamEditor" onclick="initParameditor(document.getElementById('XMLEditor').innerText);"
+      data-bs-toggle="offcanvas" data-bs-target="#Paramoffcanvas" aria-controls="Paramoffcanvas"  type="button">Parameter Editor</button> 
+      <button class="btn btn-secondary" id="saveXML" onclick="saveData( document.getElementById('XMLEditor').innerText , simParamName);"
+          type="button">Save XML</button>  
+      <button class="btn btn-primary " id="ReloadXML"
+          onclick="loadingModal1.show();XMLParameter=document.getElementById('XMLEditor').innerText, runSimulation( XMLParameter,simTime);" type="button">Run Simulation</button>       
+        </div> 
+    
+  </div>
   <!-- Button trigger modal -->
-  <button type="button" id="modalButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loadingModal">
+  <button type="button" id="modalButton" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#loadingModal">
     loading screen
   </button>
 
   <!-- Modal -->
   <div class="modal " id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog ">
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="loadingModalLabel">Simulation Running</h1>
           <button type="button" class="btn-close" id="modalClose" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
-          <div class="spinner-border text-success" role="status">
-            <span class="visually-hidden">Loading...</span>
+        <div class="modal-body"  >
+          <div class="spinner-border text-success" role="status" >
+            <span class="visually-hidden" >Loading...</span>
+            
           </div>
+          <div id="statusText" style="overflow-y: auto; max-height: 100px;"></div> 
         </div>
         <div class="modal-footer">
 
@@ -37292,8 +37315,8 @@
           const S = Rt(P_.render, 10);
           p.onModified(S, -1),
           O_.resetCamera(),
-          P_.render(),
-          console.log("focalPoint is: "+O_.getActiveCamera().getFocalPoint());
+          P_.render();
+          //console.log("focalPoint is: "+O_.getActiveCamera().getFocalPoint());
           var distance = O_.getActiveCamera().getDistance()/2;
           
             (r.g.pipeline[e] = {
@@ -76591,8 +76614,8 @@
     document.getElementById("modalClose").click();
   }
 
-  function initXMLeditor(text) {
-    var editor = document.getElementById("XMLEditor");
+  function initParameditor(text) {
+    var editor = document.getElementById("ParamEditor");
     let parser = new DOMParser();
     xmlDoc = parser.parseFromString(text, "text/xml");
     var xmlNodes = [].slice.call(xmlDoc.children[0].children);
@@ -76620,7 +76643,7 @@
           } else {
             htmlText += `<span class="input-group-text ">` + attr + `</span>
                            <input type="text" class="form-control fs-6" value=`+ parameter.getAttribute(attr) + `
-                            onchange="xmlDoc.children[0].children[`+ index + `].children[` + Parameter_index + `].setAttribute('` + attr + `' , this.value); XMLParameter = new XMLSerializer().serializeToString(xmlDoc.documentElement);">
+                            onchange="xmlDoc.children[0].children[`+ index + `].children[` + Parameter_index + `].setAttribute('` + attr + `' , this.value); XMLParameter = new ParamSerializer().serializeToString(xmlDoc.documentElement);">
                             `
           }
         }
@@ -76628,29 +76651,32 @@
       }
       htmlText += `</div> </div> </div>`;
     }
-    htmlText += ` </div>`;
+    htmlText += `</div>`;
     editor.innerHTML = htmlText;
   }
 
   function runSimulation(text, simTime = simTime) {
     try {
       clearInterval(interval);
+      let status = document.getElementById("statusText");
+        status.innerText = "";
+      interval = 0;
       XMLParameter = text;
       FS.writeFile(simParamName, text);
-      //document.getElementById("XMLEditor").innerText= text; 
+      document.getElementById("XMLEditor").innerText= text; 
       setTimeout(() => { callMain([simParamName, simTime]); loadVTP(); }, 0);
-      initXMLeditor(text);
+      initParameditor(text);
       //saveData(FS.readFile("output.vtp", { encoding: "utf8" }),"1.vtp")
-      setTimeout(() => { ; }, 200);
+      //setTimeout(() => { ; }, 200);
       
     }
     catch (error) {
-      console.log(error)
+      alert(error);
     }
   }
 
   function loadParameter(name, time) {
-    const XMLeditor = new bootstrap.Offcanvas('#XMLoffcanvas');
+    const Parameditor = new bootstrap.Offcanvas('#Paramoffcanvas');
     simParamName = name;
     simTime = time;
     document.getElementById("simTimeInput").value = time;
@@ -76659,12 +76685,9 @@
     fetch(myRequest)
       .then((response) => response.blob())
       .then((myBlob) => myBlob.text())
-      .then((text) => { XMLParameter = text; runSimulation(text, simTime); XMLeditor.show() });
-
+      .then((text) => { XMLParameter = text; runSimulation(text, simTime); Parameditor.show() });
     //saveData(FS.readFile("output.vtp", { encoding: "utf8" }),"1.vtp")
-
   }
-
   var loadingModal1 = new bootstrap.Modal('#loadingModal', {
     keyboard: false
   });

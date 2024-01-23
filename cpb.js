@@ -797,8 +797,16 @@ var TTY = {
     },
     put_char(tty, val) {
       if (val === null || val === 10) {
-        out(UTF8ArrayToString(tty.output, 0));
+        const text = UTF8ArrayToString(tty.output, 0);
+        out(text);
+        if (text.includes("could not open file ")){
+          alert("Errors in parameter file, please check and reload the parameters")
+        };
+        let status = document.getElementById("statusText");
+        status.innerText += text+"\n";
+        status.scrollTop = status.scrollHeight;
         tty.output = [];
+
       } else {
         if (val != 0) tty.output.push(val);
       }
