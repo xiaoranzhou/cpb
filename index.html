@@ -49,6 +49,9 @@
             <li class="nav-item">
               <a class="nav-link " href="#" onclick="saveButton()">Download VTP</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link " href="#" id="rotationButton" >Rotation</a>
+            </li>
           </ul>
           <!--form class="d-flex" role="search">
             <input
@@ -131,6 +134,7 @@
 <script type="text/javascript">
   var simParamName = "leaf.xml";
   var simTime = "180";
+  var interval;
   /*! For license information please see GeometryViewer.js.LICENSE.txt */
   !(function () {
     var e = {
@@ -31045,7 +31049,7 @@
                 e.invokeEvent({ type: "StartEvent" }),
                 (t.originalBackground =
                   t._renderer.getBackgroundByReference()),
-                t._renderer.setBackground(0, 0, 0, 0);
+                t._renderer.setBackground(255, 255, 255, 1);
               const r = t._openGLRenderWindow.getRenderPasses();
               for (
                 e.beginSelection(), t.currentPass = Wy.MIN_KNOWN_PASS;
@@ -37284,11 +37288,14 @@
             m.setMapper(h),
             h.setInputData(f),
             O_.addActor(m),
-            I_.setScalarsToColors(h.getLookupTable());
+            I_.setScalarsToColors(h.getLookupTable());var xxx =0;
           const S = Rt(P_.render, 10);
           p.onModified(S, -1),
-            O_.resetCamera(),
-            P_.render(),
+          O_.resetCamera(),
+          P_.render(),
+          console.log("focalPoint is: "+O_.getActiveCamera().getFocalPoint());
+          var distance = O_.getActiveCamera().getDistance()/2;
+          
             (r.g.pipeline[e] = {
               actor: m,
               mapper: h,
@@ -37297,7 +37304,29 @@
               renderer: O_,
               renderWindow: P_,
             }),
-            W_.update(), closeModal();
+            W_.update(), 
+            closeModal() ;
+          function startOrStop(){
+            if (interval){
+              clearInterval(interval);
+              interval = 0;
+            }else{
+              interval = setInterval(function() {
+                xxx = xxx + 1;
+                const S = Rt(P_.render, 10);
+                p.onModified(S, -1),
+                O_.resetCamera(),
+                O_.getActiveCamera().setPosition(distance*Math.sin(xxx*3.1415926/400), distance*Math.cos(xxx*3.1415926/400), distance),
+                P_.render(),
+                W_.update();
+                
+                //console.log("rotating at" + xxx+ " distance is"+ distance);
+                }, 50);
+              }
+          }
+          let rotationBtn = document.getElementById("rotationButton");
+          rotationBtn.addEventListener("click", startOrStop) ; 
+          startOrStop();
         }
         function X_(e) {
           const t = new FileReader();
@@ -76605,6 +76634,7 @@
 
   function runSimulation(text, simTime = simTime) {
     try {
+      clearInterval(interval);
       XMLParameter = text;
       FS.writeFile(simParamName, text);
       //document.getElementById("XMLEditor").innerText= text; 
@@ -76612,6 +76642,7 @@
       initXMLeditor(text);
       //saveData(FS.readFile("output.vtp", { encoding: "utf8" }),"1.vtp")
       setTimeout(() => { ; }, 200);
+      
     }
     catch (error) {
       console.log(error)
