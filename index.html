@@ -53,7 +53,7 @@
               <a class="nav-link " href="#" onclick="saveButton()">Download VTP</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link " href="#" id="rotationButton" >Rotation</a>
+              <a class="nav-link " href="#" onclick="startOrStop()" id="rotationButton" >Rotation</a>
             </li>
           </ul>
           <!--form class="d-flex" role="search">
@@ -155,6 +155,7 @@
 
 </body>
 <script type="text/javascript">
+  var browserName;
   var simParamName = "leaf.xml";
   var simTime = "180";
   var interval;
@@ -37211,8 +37212,9 @@
             s.addEventListener("input", function (e) {
               const t = Number(e.target.value) / 100;
               m.getProperty().setOpacity(t), P_.render();
-            });
-          const x = [{ value: "PointData:time", label: "(p) time" },{ value: ":", label: "Solid Color" }].concat(
+            });let x=[];
+          if (browserName != "Firefox"){
+            x = [{ value: "PointData:time", label: "(p) time" },{ value: ":", label: "Solid Color" }].concat(
             f
               .getPointData()
               .getArrays()
@@ -37227,7 +37229,12 @@
                 label: `(c) ${e.getName()}`,
                 value: `CellData:${e.getName()}`,
               }))
-          );
+          );} else {
+            x = [{ value: ":", label: "Solid Color" },{ value: ":", label: "Solid Color" }];
+
+          }
+
+
           function _(e) {
             const [t, r] = e.target.value.split(":"),
               n = "PointData" === t;
@@ -37269,13 +37276,16 @@
             }),
               b();
           }
-          (i.innerHTML = x
+          if (browserName != "Firefox"){
+            (i.innerHTML = x
             .map(
               ({ label: e, value: t }) =>
                 `<option value="${t}" ${k_ === t ? 'selected="selected"' : ""
                 }>${e}</option>`
             )
-            .join("")),
+            .join(""));
+          } else {}
+          ;
             i.addEventListener("change", _),
             _({ target: i }),
             a.addEventListener("change", function (e) {
@@ -37311,7 +37321,8 @@
             m.setMapper(h),
             h.setInputData(f),
             O_.addActor(m),
-            I_.setScalarsToColors(h.getLookupTable());var xxx =0;
+            I_.setScalarsToColors(h.getLookupTable());
+            var xxx =0;
           const S = Rt(P_.render, 10);
           p.onModified(S, -1),
           O_.resetCamera(),
@@ -37330,7 +37341,7 @@
             W_.update(), 
             closeModal() ;
           function startOrStop(){
-            if (interval){
+            if (interval != 0 ){
               clearInterval(interval);
               interval = 0;
             }else{
@@ -37344,11 +37355,11 @@
                 W_.update();
                 
                 //console.log("rotating at" + xxx+ " distance is"+ distance);
-                }, 50);
+                }, 40);
               }
-          }
-          let rotationBtn = document.getElementById("rotationButton");
-          rotationBtn.addEventListener("click", startOrStop) ; 
+              
+          };
+          window.startOrStop= startOrStop;
           startOrStop();
         }
         function X_(e) {
@@ -76643,7 +76654,8 @@
           } else {
             htmlText += `<span class="input-group-text ">` + attr + `</span>
                            <input type="text" class="form-control fs-6" value=`+ parameter.getAttribute(attr) + `
-                            onchange="xmlDoc.children[0].children[`+ index + `].children[` + Parameter_index + `].setAttribute('` + attr + `' , this.value); XMLParameter = new ParamSerializer().serializeToString(xmlDoc.documentElement);">
+                            onchange="xmlDoc.children[0].children[`+ index + `].children[` + Parameter_index + `].setAttribute('` + attr + `' , this.value); 
+                            XMLParameter = new XMLSerializer().serializeToString(xmlDoc.documentElement);">
                             `
           }
         }
@@ -76691,9 +76703,33 @@
   var loadingModal1 = new bootstrap.Modal('#loadingModal', {
     keyboard: false
   });
+  
+  function checkBrowser(){
+    let browser = "";
+    let c = navigator.userAgent.search("Chrome");
+    let f = navigator.userAgent.search("Firefox");
+    let m8 = navigator.userAgent.search("MSIE 8.0");
+    let m9 = navigator.userAgent.search("MSIE 9.0");
+    if (c > -1) {
+        browser = "Chrome";
+    } else if (f > -1) {
+        browser = "Firefox";
+    } else if (m9 > -1) {
+        browser ="MSIE 9.0";
+    } else if (m8 > -1) {
+        browser ="MSIE 8.0";
+    }
+    return browser;
+}
+  
+  
+  
   window.addEventListener("load", (event) => {
     loadParameter("sympodial_monochasium.xml", "180");
-
+    browserName = checkBrowser();
+    if (browserName == "Firefox"){
+      alert("Firefox only support single color visualization. \n Please click run simulation after the HEAP 8 Error message. \n We have better support on Chrome, Edge, Opera or Safari")
+    } 
 
   });
 </script>
