@@ -32,9 +32,15 @@
                 Parameters
               </a>
               <ul id="params" class="dropdown-menu">
-                <li><button class="dropdown-item btn btn-secondary" id="ParamEditorButton" type="button" data-bs-toggle="offcanvas"
+                <li><input class="dropdown-item form-control" onchange="uploadParamRun()"  id="uploadParam" type="file" ></input></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><button class="dropdown-item " id="ParamEditorButton" type="button" data-bs-toggle="offcanvas"
                 data-bs-target="#Paramoffcanvas" aria-controls="Paramoffcanvas">Parameter Editor</button></li>
                 <li><hr class="dropdown-divider"></li>
+               
+
+
+                
               </ul>
             </li>
 
@@ -159,6 +165,7 @@
   var simParamName = "leaf.xml";
   var simTime = "180";
   var interval;
+  var distance;
   /*! For license information please see GeometryViewer.js.LICENSE.txt */
   !(function () {
     var e = {
@@ -29991,6 +29998,7 @@
             }),
             (e.handleMouseWheel = (r) => {
               const n = 1 - r.spinY / t.zoomFactor;
+              distance= distance/n;
               e.dollyByFactor(r.pokedRenderer, n);
             }),
             (e.dollyByFactor = (e, r) => {
@@ -37328,7 +37336,7 @@
           O_.resetCamera(),
           P_.render();
           //console.log("focalPoint is: "+O_.getActiveCamera().getFocalPoint());
-          var distance = O_.getActiveCamera().getDistance()/2;
+          distance = O_.getActiveCamera().getDistance()/2;
           
             (r.g.pipeline[e] = {
               actor: m,
@@ -37347,13 +37355,20 @@
             }else{
               interval = setInterval(function() {
                 xxx = xxx + 1;
-                const S = Rt(P_.render, 10);
-                p.onModified(S, -1),
-                O_.resetCamera(),
-                O_.getActiveCamera().setPosition(distance*Math.sin(xxx*3.1415926/400), distance*Math.cos(xxx*3.1415926/400), distance),
+                // const S = Rt(P_.render, 10);
+                // p.onModified(S, -1),
+                // O_.resetCamera(),
+                // O_.getActiveCamera().setPosition(distance*Math.sin(xxx*3.1415926/400), distance*Math.cos(xxx*3.1415926/400), distance),
+                // O_.getActiveCamera().setFocalPoint(0,0,0),
+                // O_.getActiveCamera().setViewUp(0,0,1),
+                
+                const r = O_.getActiveCamera();
+                r.azimuth(0.5),
+                r.setFocalPoint(0,0,0),
+                r.setViewUp(0,0,1),
+                r.setViewAngle(20),
                 P_.render(),
                 W_.update();
-                
                 //console.log("rotating at" + xxx+ " distance is"+ distance);
                 }, 40);
               }
@@ -76633,13 +76648,12 @@
     let htmlText = "";
     htmlText += `<div class="accordion" id="accordionExample">`;
     for (const [index, element] of xmlNodes.entries()) {
-
       var elementParamters = [].slice.call(element.children);
       htmlText += `<div class="accordion-item">
                   <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                    <button class="accordion-button " type="button" data-bs-toggle="collapse" 
                     data-bs-target="#collapseOne`+ index + `" aria-expanded="true" aria-controls="collapseOne` + index + `">
-                    `+ element.getAttribute("type") + ` parameter, SubType ` + element.getAttribute("subType") + `
+                    `+ element.getAttribute("type") + `, SubType ` + element.getAttribute("subType") + `
                     </button>
                   </h2>
                   <div id="collapseOne`+ index + `" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -76669,6 +76683,8 @@
 
   function runSimulation(text, simTime = simTime) {
     try {
+      showModal();
+      const Parameditor = new bootstrap.Offcanvas('#Paramoffcanvas');
       clearInterval(interval);
       let status = document.getElementById("statusText");
         status.innerText = "";
@@ -76678,6 +76694,7 @@
       document.getElementById("XMLEditor").innerText= text; 
       setTimeout(() => { callMain([simParamName, simTime]); loadVTP(); }, 0);
       initParameditor(text);
+      parameditor.show();
       //saveData(FS.readFile("output.vtp", { encoding: "utf8" }),"1.vtp")
       //setTimeout(() => { ; }, 200);
       
@@ -76688,7 +76705,7 @@
   }
 
   function loadParameter(name, time) {
-    const Parameditor = new bootstrap.Offcanvas('#Paramoffcanvas');
+    
     simParamName = name;
     simTime = time;
     document.getElementById("simTimeInput").value = time;
@@ -76697,7 +76714,7 @@
     fetch(myRequest)
       .then((response) => response.blob())
       .then((myBlob) => myBlob.text())
-      .then((text) => { XMLParameter = text; runSimulation(text, simTime); Parameditor.show() });
+      .then((text) => { XMLParameter = text; runSimulation(text, simTime) });
     //saveData(FS.readFile("output.vtp", { encoding: "utf8" }),"1.vtp")
   }
   var loadingModal1 = new bootstrap.Modal('#loadingModal', {
@@ -76722,10 +76739,26 @@
     return browser;
 }
   
-  
+  function uploadParamRun(){
+    const file = document.getElementById("uploadParam").files[0];
+    simParamName = file.name;
+    const extension = file.name.split(".").slice(-1)[0].toString();
+    if ( extension.toLowerCase() == "xml" ){
+      let reader = new FileReader();
+      reader.onload = function () {
+        
+        var data = new Uint8Array(reader.result);
+        XMLParameter = new TextDecoder().decode(data);
+        runSimulation(XMLParameter, simTime); 
+      }
+      reader.readAsArrayBuffer(file);
+    }
+
+  }
   
   window.addEventListener("load", (event) => {
-    loadParameter("sympodial_monochasium.xml", "180");
+    showModal();
+    loadParameter("sympodial_dichasium.xml", "180");
     browserName = checkBrowser();
     if (browserName == "Firefox"){
       alert("Firefox only support single color visualization. \n Please click run simulation after the HEAP 8 Error message. \n We have better support on Chrome, Edge, Opera or Safari")

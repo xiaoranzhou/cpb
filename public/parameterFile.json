@@ -1,12 +1,20 @@
 [
     "leaf_alternate.xml",
-    "leaf_arrangements.xml",
     "leaf_opposite_decussate.xml",
     "leaf_spiral.xml",
     "sympodial_dichasium.xml",
     "sympodial_monochasium.xml",
-    "monopodial_final.xml",
-    "leaf.xml"
+    "monopodial.xml",
+    "maiz.xml",
+    "Anagallis_femina_Leitner_2010.xml",
+    "Brassica_napus_a_Leitner_2010.xml",
+    "Crypsis_aculeata_Clausnitzer_1994.xml",
+    "Lupinus_albus_Leitner_2014.xml",
+    "Pisum_sativum_b_TSEGAYE_1995.xml",
+    "Triticum_aestivum_a_Bingham_2011.xml"
+
+
+    
 
 
 ]

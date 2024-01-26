@@ -65,8 +65,8 @@
     <parameter name="theta" value="1.45" dev="0.46999999999999997"/>
     <parameter name="rlt" value="1000000000" dev="100000000"/>
     <parameter name="gf" value="1"/>
-    <parameter name="successor" number="0" type="2" percentage="0.0089999999999999993"/>
-    <parameter name="successor" number="1" type="3" percentage="0.99099999999999999"/>
+
+    <parameter name="successor" number="0" type="3" percentage="0.99099999999999999"/>
 </organ>
 
 <organ type="root" name="lateral2" subType="3">
@@ -91,7 +91,6 @@
     <parameter name="theta" value="1.47" dev="0.67000000000000004"/>
     <parameter name="rlt" value="1000000000" dev="100000000"/>
     <parameter name="gf" value="1"/>
-    <parameter name="successor" number="0" type="3" percentage="1"/>
 </organ>
 
 <organ type="root" name="nodal_root" subType="4">
