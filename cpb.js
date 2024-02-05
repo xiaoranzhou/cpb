@@ -16,7 +16,7 @@ fetch(fetchFile)
           document.getElementById("params").innerHTML = document
             .getElementById("params")
             .innerHTML.concat(
-              `<li><a class="dropdown-item" href="#" onclick="loadParameter('` +
+              `<li><a class="dropdown-item"  onclick="loadParameter('` +
                 element +
                 `' ,'180' )" >` +
                 element +

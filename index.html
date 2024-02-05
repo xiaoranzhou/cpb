@@ -15,13 +15,15 @@
 .accordion{
   --bs-accordion-btn-padding-y:0.5rem;
 }
-
+a.link {
+    cursor: pointer !important;
+}
 </style>
 <body style="background-color: black;">
   <div class="container text-center">
     <nav class="navbar navbar-dark navbar-expand-lg  row" style="background-color: #000000;">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">CPlantBox WebAssembly</a>
+        <button class="navbar-brand btn btn-dark" >CPlantBox WebAssembly</button>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -29,10 +31,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+              <button class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Parameters
-              </a>
+            </button>
               <ul id="params" class="dropdown-menu">
                 <li><input class="dropdown-item form-control" onchange="uploadParamRun()"  id="uploadParam" type="file" ></input></li>
                 <li><hr class="dropdown-divider"></li>
@@ -54,14 +56,14 @@
             </form>
 
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick='loadingModal1.show();runSimulation( XMLParameter, simTime); '>Run Simulation</a>
+              <button class="nav-link"  onclick='loadingModal1.show();runSimulation( XMLParameter, simTime); '>Run Simulation</button>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link " href="#" onclick="saveButton()">Download VTP</a>
+              <button class="nav-link" onclick="saveButton()">Download VTP</button>
             </li>
             <li class="nav-item">
-              <a class="nav-link " href="#" onclick="startOrStop()" id="rotationButton" >Rotation</a>
+              <button class="nav-link" style="cursor: pointer"  onclick="startOrStop()" id="rotationButton" >Rotation</button>
             </li>
           </ul>
           <!--form class="d-flex" role="search">
@@ -91,7 +93,7 @@
 
 
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="Paramoffcanvas"
-    aria-labelledby="offcanvasScrollingLabel">
+    aria-labelledby="offcanvasScrollingLabel" style="width:35vw; top: 10vh; height: 85vh; border-radius:0px 15px  15px 0px;">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Parameter editor</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -117,7 +119,7 @@
   </div>
 
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="XMLoffcanvas"
-    aria-labelledby="XMLEditorLabel">
+    aria-labelledby="XMLEditorLabel" style="width:35vw; top: 10vh; height: 85vh; border-radius:0px 15px  15px 0px;">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="XMLEditorLabel">XML editor</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -37350,8 +37352,8 @@
             }),
             W_.update(), 
             closeModal() ;
-          function startOrStop(){
-            if (interval != 0 ){
+          function startOrStop(boole){
+            if ((interval != 0) ||  (boole==0)){
               clearInterval(interval);
               interval = 0;
             }else{
@@ -76696,9 +76698,10 @@
       XMLParameter = text;
       FS.writeFile(simParamName, text);
       document.getElementById("XMLEditor").innerText= text; 
-      setTimeout(() => { callMain([simParamName, simTime]); loadVTP(); }, 0);
+      setTimeout(() => { callMain([simParamName, simTime]), loadVTP()  }, 0);
       initParameditor(text);
       Parameditor.show();
+      
       //saveData(FS.readFile("output.vtp", { encoding: "utf8" }),"1.vtp")
       //setTimeout(() => { ; }, 200);
       
@@ -76708,17 +76711,48 @@
     }
   }
 
+  function urlParam(text){
+    let parser = new DOMParser();
+    xmlDoc = parser.parseFromString(text, "text/xml");
+    const paramRoute = window.location.href.split("?");
+    const paramList =  paramRoute.slice(1,-1);
+    //try{
+      if (paramList){
+        paramList.forEach((element, index)=>{
+          const param1 = element.split("=");
+          const param10 = param1[0].split(",");
+          const xpathText = '//organ[@type="'+param10[0]+'" and @subType="'+param10[1]+'"]/parameter[@name="'+param10[2]+'"]/@value';
+          console.log(xpathText);
+          var paramElement = xmlDoc.evaluate(xpathText, xmlDoc, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+          paramElement.singleNodeValue.value = param1[1];
+          console.log(paramElement.singleNodeValue.value);
+
+        }
+        ); 
+        XMLParameter = new XMLSerializer().serializeToString(xmlDoc.documentElement);
+        console.log(xmlDoc);
+         }  
+
+    //}catch(e){
+    //  alert("URL parameter change failed, error is :" + e+ ". You can stil change the parameters through webpage GUI")
+
+    //}
+
+
+  }
+
   function loadParameter(name, time) {
     
     simParamName = name;
     simTime = time;
     document.getElementById("simTimeInput").value = time;
+    
 
     const myRequest = new Request("public/" + name);
     fetch(myRequest)
       .then((response) => response.blob())
       .then((myBlob) => myBlob.text())
-      .then((text) => { XMLParameter = text; runSimulation(text, simTime) });
+      .then((text) => { XMLParameter = text; urlParam(XMLParameter), runSimulation(XMLParameter, simTime) });
     //saveData(FS.readFile("output.vtp", { encoding: "utf8" }),"1.vtp")
   }
   var loadingModal1 = new bootstrap.Modal('#loadingModal', {
@@ -76759,16 +76793,67 @@
     }
 
   }
-  
+  function urlAccess(){
+    
+    
+
+
+
+    const urlRoute = window.location.href.split("#");
+			    switch (urlRoute.slice(-1)[0]) {
+                    case urlRoute[0]:
+                    loadParameter("sympodial_dichasium.xml", "180");
+                    break;
+                    case "":
+                    loadParameter("sympodial_dichasium.xml", "180");
+                    break;
+                    case "leaf_spiral.xml":
+                    loadParameter("leaf_spiral.xml", "180");
+                    break;
+                    case "leaf_alternate.xml":
+                    loadParameter("leaf_alternate.xml", "180");
+                    break;
+                    case "leaf_opposite_decussate.xml":
+                    loadParameter("leaf_opposite_decussate.xml", "180");
+                    break;
+                    case "sympodial_dichasium.xml":
+                    loadParameter("sympodial_dichasium.xml", "180");
+                    break;
+                    case "sympodial_monochasium.xml":
+                    loadParameter("sympodial_monochasium.xml", "180");
+                    break;
+                    case "monopodial.xml":
+                    loadParameter("monopodial.xml", "180");
+                    break;
+                    case "Anagallis_femina_Leitner_2010.xml":
+                    loadParameter("Anagallis_femina_Leitner_2010.xml", "180");
+                    break;
+                    case "Brassica_napus_a_Leitner_2010.xml":
+                    loadParameter("Brassica_napus_a_Leitner_2010.xml", "180");
+                    break;
+			    }
+  }
   window.addEventListener("load", (event) => {
     showModal();
-    loadParameter("sympodial_dichasium.xml", "180");
+    
     browserName = checkBrowser();
     if (browserName == "Firefox"){
       alert("Firefox only support single color visualization. \n Please click run simulation after the HEAP 8 Error message. \n We have better support on Chrome, Edge, Opera or Safari")
     } 
-    tour.show()
+    urlAccess();
+          
+    //tour.show()
   });
+  addEventListener("hashchange", (event) => {
+
+      urlAccess();
+
+    
+
+
+
+  });
+
 </script>
 
 </html>
