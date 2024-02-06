@@ -1,7 +1,16 @@
 var Module = typeof Module != "undefined" ? Module : {};
 var moduleOverrides = Object.assign({}, Module);
+const handleErrors = response => {
+  if (!response.ok) {
+    alert(response.statusText+". XML parameter file can not be loaded. Please check your XML paramter after '#'. Then refresh the webpage to reset simulation.");
+    throw Error(response.statusText);
+  }
+  return response;
+}
+try {
 const fetchFile = new Request("public/parameterFile.json");
 fetch(fetchFile)
+  .then(handleErrors)
   .then((response) => response.blob())
   .then((myBlob) => myBlob.text())
   .then((text) => {
@@ -9,6 +18,7 @@ fetch(fetchFile)
     for (const [index, element] of fileList.entries()) {
       const fetchFile = new Request("public/" + element);
       fetch(fetchFile)
+        .then(handleErrors)
         .then((response) => response.blob())
         .then((myBlob) => myBlob.text())
         .then((text) => {
@@ -16,18 +26,22 @@ fetch(fetchFile)
           document.getElementById("params").innerHTML = document
             .getElementById("params")
             .innerHTML.concat(
-              `<li><a class="dropdown-item"  onclick="loadParameter('` +
+              `<li><a class="dropdown-item"  href='#public/` +
                 element +
-                `' ,'180' )" >` +
+                `' >` +
                 element +
                 "</a></li>"
             );
         });
     }
   });
+}catch(error){
+  alert("File loading error: "+ error);
+}
 var arguments_ = ["leaf.xml", "5"];
 var thisProgram = "./this.program";
 var quit_ = (status, toThrow) => {
+  //alert("error please refresh to reset simulation. The XML parameter URL may be wrong. "+ status);
   throw toThrow;
 };
 var ENVIRONMENT_IS_WEB = typeof window == "object";
@@ -92,6 +106,7 @@ if (ENVIRONMENT_IS_NODE) {
   });
   quit_ = (status, toThrow) => {
     process.exitCode = status;
+    //alert("error please refresh to reset simulation. Error is: " +status);
     throw toThrow;
   };
   Module["inspect"] = () => "[Emscripten Module object]";
@@ -246,6 +261,8 @@ function abort(what) {
   EXITSTATUS = 1;
   what += ". Build with -sASSERTIONS for more info.";
   var e = new WebAssembly.RuntimeError(what);
+  alert("Error, please refresh to reset simulation, XML is automatically saved.");
+  saveData( document.getElementById('XMLEditor').innerText , simParamName);
   throw e;
 }
 var dataURIPrefix = "data:application/octet-stream;base64,";
@@ -269,6 +286,7 @@ function getBinaryPromise(binaryFile) {
   if (!wasmBinary && (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER)) {
     if (typeof fetch == "function" && !isFileURI(binaryFile)) {
       return fetch(binaryFile, { credentials: "same-origin" })
+        .then(handleErrors)
         .then((response) => {
           if (!response["ok"]) {
             throw "failed to load wasm binary file at '" + binaryFile + "'";
@@ -801,6 +819,8 @@ var TTY = {
         out(text);
         if (text.includes("could not open file ")){
           alert("Errors in parameter file, please check and reload the parameters")
+        }else if (text.includes("could not open file ")){
+
         };
         let status = document.getElementById("statusText");
         status.innerText += text+"\n";

@@ -4,16 +4,18 @@
 <title>CPlantBox Web Assembly</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="stylesheet" href="" />
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-  integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+<script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/bs5-intro-tour.js" type="text/javascript" charset="utf-8"></script>
 <link href="css/bs5-intro-tour.css" rel="stylesheet" />	
 <script src="cpb.js"></script>
 <style>
 .accordion{
   --bs-accordion-btn-padding-y:0.5rem;
+}
+.btn-close{
+  color:lightgrey !important;
+  background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") !important;
 }
 a.link {
     cursor: pointer !important;
@@ -52,7 +54,7 @@ a.link {
 
               <label for="simTimeInput" class="me-2 nav-link">Simulation time</label>
               <input class="form-control-sm " id="simTimeInput" type="text"
-                onchange="simTime=this.value;console.log(this.value); " placeholder="10">
+                onchange="simTime=this.value;console.log(this.value); " placeholder="10" onkeydown=" if (event.keyCode == 13){event.preventDefault(),runSimulation( XMLParameter, simTime); }";>
             </form>
 
             <li class="nav-item">
@@ -93,7 +95,7 @@ a.link {
 
 
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="Paramoffcanvas"
-    aria-labelledby="offcanvasScrollingLabel" style="width:35vw; top: 10vh; height: 85vh; border-radius:0px 15px  15px 0px;">
+    aria-labelledby="offcanvasScrollingLabel" style=" width:35vw; top: 10vh; height: 85vh; border-radius:0px 15px  15px 0px;">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Parameter editor</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -110,7 +112,7 @@ a.link {
       <button class="btn btn-secondary" id="saveParam" onclick="saveData( XMLParameter , simParamName);" 
           type="button">Save XML</button>  
       
-      <button class="btn btn-primary " id="ReloadXML"
+      <button class="btn btn-primary " id="runSimulation"
           onclick="loadingModal1.show(); runSimulation( XMLParameter,simTime)" type="button">Run Simulation</button>
       
         
@@ -2547,6 +2549,7 @@ a.link {
           if (e.isA) return e;
           if (!e.vtkClass)
             return (
+              
               Ve.console &&
               Ve.console.error &&
               Ve.console.error("Invalid VTK object"),
@@ -2555,6 +2558,7 @@ a.link {
           const t = Ue[e.vtkClass];
           if (!t)
             return (
+
               Ve.console &&
               Ve.console.error &&
               Ve.console.error(
@@ -3275,6 +3279,8 @@ a.link {
                   : 0;
               if (!e.apply)
                 return (
+                  alert("VTK loading error, maybe the generated VTP file is too large, please reduce your plant size and retry."),
+                  saveData( XMLParameter , simParamName),
                   console.error(`Invalid callback for event ${r}`), null
                 );
               if (t.deleted)
@@ -36201,11 +36207,15 @@ a.link {
                 return console.error("Invalid compressor", u), !1;
               if (c && "LittleEndian" !== c)
                 return (
+                  alert("VTK loading error, maybe the generated VTP file is too large, please reduce your plant size and retry."),
+                  saveData( XMLParameter , simParamName),
                   console.error("Only LittleEndian encoding is supported"),
                   !1
                 );
               if (l !== t.dataType)
                 return (
+                  alert("VTK loading error, maybe the generated VTP file is too large, please reduce your plant size and retry."),
+                  saveData( XMLParameter , simParamName),
                   console.error(
                     "Invalid data type",
                     l,
@@ -36266,6 +36276,8 @@ a.link {
                     (t += i[e].length);
                 if (((t.binaryBuffer = c), !t.binaryBuffer))
                   return (
+                    alert("VTK loading error, maybe the generated VTP file is too large, please reduce your plant size and retry."),
+                  saveData( XMLParameter , simParamName),
                     console.error(
                       "Processing appended data format: requires binaryBuffer to parse"
                     ),
@@ -76690,16 +76702,17 @@ a.link {
   function runSimulation(text, simTime = simTime) {
     try {
       showModal();
-      const Parameditor = new bootstrap.Offcanvas('#Paramoffcanvas');
+      
       clearInterval(interval);
       let status = document.getElementById("statusText");
-        status.innerText = "";
+      status.innerText = "";
       interval = 0;
-      XMLParameter = text;
+      XMLParameter =text;
       FS.writeFile(simParamName, text);
-      document.getElementById("XMLEditor").innerText= text; 
-      setTimeout(() => { callMain([simParamName, simTime]), loadVTP()  }, 0);
+      document.getElementById("XMLEditor").innerText= text;
+      setTimeout(() => { callMain([simParamName, simTime]); loadVTP()  }, 0);
       initParameditor(text);
+      const Parameditor = new bootstrap.Offcanvas('#Paramoffcanvas');
       Parameditor.show();
       
       //saveData(FS.readFile("output.vtp", { encoding: "utf8" }),"1.vtp")
@@ -76716,7 +76729,7 @@ a.link {
     xmlDoc = parser.parseFromString(text, "text/xml");
     const paramRoute = window.location.href.split("?");
     const paramList =  paramRoute.slice(1,-1);
-    //try{
+    try{
       if (paramList){
         paramList.forEach((element, index)=>{
           const param1 = element.split("=");
@@ -76733,27 +76746,33 @@ a.link {
         console.log(xmlDoc);
          }  
 
-    //}catch(e){
-    //  alert("URL parameter change failed, error is :" + e+ ". You can stil change the parameters through webpage GUI")
+    }catch(e){
+      alert("URL parameter change failed, error is :" + e+ ". You can stil change the parameters through webpage GUI")
 
-    //}
+    }
 
 
   }
-
-  function loadParameter(name, time) {
+  
+  function loadParameter(url, time) {
     
-    simParamName = name;
+    simParamName = url.split("/").slice(-1)[0];
+    console.log("load Paramter url is : " +url);
     simTime = time;
     document.getElementById("simTimeInput").value = time;
     
-
-    const myRequest = new Request("public/" + name);
-    fetch(myRequest)
+    
+    const myRequest = new Request(url);
+    try{
+    fetch(myRequest, {})
+      .then(handleErrors)
       .then((response) => response.blob())
       .then((myBlob) => myBlob.text())
       .then((text) => { XMLParameter = text; urlParam(XMLParameter), runSimulation(XMLParameter, simTime) });
     //saveData(FS.readFile("output.vtp", { encoding: "utf8" }),"1.vtp")
+    }catch(error){
+      alert("XML parameter file can not be loaded. Please check your XML paramter after '#'. Then refresh the webpage to reset simulation.")
+    }
   }
   var loadingModal1 = new bootstrap.Modal('#loadingModal', {
     keyboard: false
@@ -76787,7 +76806,10 @@ a.link {
         
         var data = new Uint8Array(reader.result);
         XMLParameter = new TextDecoder().decode(data);
-        runSimulation(XMLParameter, simTime); 
+        document.getElementById("XMLEditor").innerText= XMLParameter;
+        initParameditor(XMLParameter);
+        const Parameditor = new bootstrap.Offcanvas('#Paramoffcanvas');
+        Parameditor.show();
       }
       reader.readAsArrayBuffer(file);
     }
@@ -76802,36 +76824,15 @@ a.link {
     const urlRoute = window.location.href.split("#");
 			    switch (urlRoute.slice(-1)[0]) {
                     case urlRoute[0]:
-                    loadParameter("sympodial_dichasium.xml", "180");
+                    loadParameter("public/sympodial_dichasium.xml", "180");
                     break;
                     case "":
-                    loadParameter("sympodial_dichasium.xml", "180");
+                    loadParameter("public/sympodial_dichasium.xml", "180");
                     break;
-                    case "leaf_spiral.xml":
-                    loadParameter("leaf_spiral.xml", "180");
-                    break;
-                    case "leaf_alternate.xml":
-                    loadParameter("leaf_alternate.xml", "180");
-                    break;
-                    case "leaf_opposite_decussate.xml":
-                    loadParameter("leaf_opposite_decussate.xml", "180");
-                    break;
-                    case "sympodial_dichasium.xml":
-                    loadParameter("sympodial_dichasium.xml", "180");
-                    break;
-                    case "sympodial_monochasium.xml":
-                    loadParameter("sympodial_monochasium.xml", "180");
-                    break;
-                    case "monopodial.xml":
-                    loadParameter("monopodial.xml", "180");
-                    break;
-                    case "Anagallis_femina_Leitner_2010.xml":
-                    loadParameter("Anagallis_femina_Leitner_2010.xml", "180");
-                    break;
-                    case "Brassica_napus_a_Leitner_2010.xml":
-                    loadParameter("Brassica_napus_a_Leitner_2010.xml", "180");
-                    break;
+                    default:
+                    loadParameter(urlRoute.slice(-1)[0], "180");
 			    }
+          
   }
   window.addEventListener("load", (event) => {
     showModal();
