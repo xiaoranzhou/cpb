@@ -12,7 +12,7 @@
 <parameter name="firstSB" value="14" dev="0"/>
 <parameter name="delaySB" value="20" dev="0"/>
 <parameter name="delayRC" value="7" dev="0"/>
-<parameter name="simulationTime" value="56" dev="0"/>
+<parameter name="simulationTime" value="180" dev="0"/>
 </organ>
 
 

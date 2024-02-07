@@ -32,7 +32,7 @@ a.link {
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item dropdown">
-              <button class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown"
+              <button id="paramDropdown" class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Parameters
             </button>
@@ -53,15 +53,15 @@ a.link {
 
               <label for="simTimeInput" class="me-2 nav-link">Simulation time</label>
               <input class="form-control-sm " id="simTimeInput" type="text"
-                onchange="simTime=this.value;console.log(this.value); " placeholder="10" onkeydown=" if (event.keyCode == 13){event.preventDefault(),runSimulation( XMLParameter, simTime); }";>
+                onchange="simTime=this.value; " placeholder="10" onkeydown=" if (event.keyCode == 13){event.preventDefault(),runSimulation( XMLParameter, this.value); }";>
             </form>
 
             <li class="nav-item">
-              <button class="nav-link"  onclick='loadingModal1.show();runSimulation( XMLParameter, simTime); '>Run Simulation</button>
+              <button class="nav-link" id="simButton"  onclick='loadingModal1.show();runSimulation( XMLParameter, simTime); '>Run Simulation</button>
             </li>
 
             <li class="nav-item">
-              <button class="nav-link" onclick="saveButton()">Download VTP</button>
+              <button class="nav-link" id="vtpDownloadButton" onclick="saveButton()">Download VTP</button>
             </li>
             <li class="nav-item">
               <button class="nav-link" style="cursor: pointer"  onclick="startOrStop()" id="rotationButton" >Rotation</button>
@@ -37378,7 +37378,7 @@ a.link {
                 
                 const r = O_.getActiveCamera();
                 r.azimuth(0.5),
-                r.setFocalPoint(0,0,0),
+                r.setFocalPoint(0,0,-3),
                 r.setViewUp(0,0,1),
                 r.setViewAngle(20),
                 P_.render(),
@@ -76612,6 +76612,37 @@ a.link {
 
 <script>
 
+var steps = [{
+			        title: "Hi, welcome to CPlantBox WASM tool",
+			        content: `
+                <span class="h3"> Let&#39;s simulate plants with a few clicks.<br> Please click the parameters: </p> <p>
+                1. <a id="myLink1" href="#public/leaf_alternate.xml"  >leaf alternate </a><br> 
+                2. <a id="myLink2" href="#public/leaf_opposite_decussate.xml"  >leaf opposite decussate</a> <br>
+                3. <a id="myLink2" href="#public/leaf_spiral.xml" > leaf spiral</a> <br>
+                4. <a id="myLink4" href="#public/sympodial_monochasium.xml"  >sympodial monochasium</a> <br>
+                5. <a id="myLink3" href="#public/sympodial_dichasium.xml"  >sympodial dichasium</a> ; </span>
+                `
+			        //
+			    }, {
+			        id: "paramDropdown",
+			        content: "<span class='h4'>Here parameters can be seleted or uploaded. <br> The parameter editor is also here.</span>"
+			    }, {
+			        id: "simTimeInput",
+			        content: "<span class='h4'>Here you can give the simulation time parameter.</span>"
+			    }, {
+			        id: "rotationButton",
+			        content: "<span class='h4'>Click here to stop or resume the rotation.</span>"
+			    }, {
+			        id: "vtpDownloadButton",
+			        content: "<span class='h4'>Here you can download VTP output of the model.</span>"
+			    }, {
+			        id: "simButton",
+			        content: "<span class='h4'>Click here to run the simulation.</span>"
+			    },
+			];
+
+			var tour = new Tour(steps); // initialize the guided tour
+
 
   var XMLParameter;
   var xmlDoc;
@@ -76825,9 +76856,11 @@ a.link {
 			    switch (urlRoute.slice(-1)[0]) {
                     case urlRoute[0]:
                     loadParameter("public/monopodial.xml", simTime);
+                    tour.show()
                     break;
                     case "":
                     loadParameter("public/monopodial.xml", simTime);
+                    tour.show()
                     break;
                     default:
                     loadParameter(urlRoute.slice(-1)[0], simTime);
@@ -76843,7 +76876,7 @@ a.link {
     } 
     urlAccess();
           
-    //tour.show()
+   
   });
   addEventListener("hashchange", (event) => {
 
