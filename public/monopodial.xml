@@ -23,7 +23,7 @@
 <!--Apical zone [cm];-->
 <parameter name="ln" value="4" dev="1.0000000000000001e-05"/>
 <!--Inter-lateral distance [cm];-->
-<parameter name="lmax" value="270" dev="40"/>
+<parameter name="lmax" value="270" dev="0"/>
 <!--Inter-lateral distance [cm];-->
 <parameter name="nob" value="61" dev="9.9998500000000003"/>
 <parameter name="r" value="4" dev="0.45000000000000001"/>

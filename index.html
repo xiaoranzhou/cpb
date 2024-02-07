@@ -14,15 +14,14 @@
   --bs-accordion-btn-padding-y:0.5rem;
 }
 .btn-close{
-  color:lightgrey !important;
   background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") !important;
 }
 a.link {
     cursor: pointer !important;
 }
 </style>
-<body style="background-color: black;">
-  <div class="container text-center">
+<body style="background-color: black;    background-image: none ;">
+  <div class="container text-center" style="background-color: black; ">
     <nav class="navbar navbar-dark navbar-expand-lg  row" style="background-color: #000000;">
       <div class="container-fluid">
         <button class="navbar-brand btn btn-dark" >CPlantBox WebAssembly</button>
@@ -83,15 +82,14 @@ a.link {
       </div>
     </nav>
     <input type="file" id="VTPInput2" multiple="" accept=".vtp" style="display: none;">
-    <div class="row">
-      <div class="col">
-      </div>
-      <div class="content GeometryViewer-module-fullScreen_RWlQz col">
 
-      </div>
 
-    </div>
+      
+
+
+
   </div>
+  <div class="content GeometryViewer-module-fullScreen_RWlQz" style="height: calc(100vh - 56px); width: 100%; position: static;"></div>
 
 
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="Paramoffcanvas"
@@ -37129,7 +37127,7 @@ a.link {
             containerStyle: {
               height: "100%",
               width: "100%",
-              position: "absolute",
+              position: "static",
             },
           })),
             (O_ = D_.getRenderer()),
@@ -76662,6 +76660,7 @@ a.link {
     var editor = document.getElementById("ParamEditor");
     let parser = new DOMParser();
     xmlDoc = parser.parseFromString(text, "text/xml");
+    
     var xmlNodes = [].slice.call(xmlDoc.children[0].children);
     let htmlText = "";
     htmlText += `<div class="accordion" id="accordionExample">`;
@@ -76702,7 +76701,7 @@ a.link {
   function runSimulation(text, simTime = simTime) {
     try {
       showModal();
-      
+      initParameditor(text);
       clearInterval(interval);
       let status = document.getElementById("statusText");
       status.innerText = "";
@@ -76711,10 +76710,10 @@ a.link {
       FS.writeFile(simParamName, text);
       document.getElementById("XMLEditor").innerText= text;
       setTimeout(() => { callMain([simParamName, simTime]); loadVTP()  }, 0);
-      initParameditor(text);
+      
       const Parameditor = new bootstrap.Offcanvas('#Paramoffcanvas');
       Parameditor.show();
-      
+      document.getElementById("simTimeInput").value = simTime;
       //saveData(FS.readFile("output.vtp", { encoding: "utf8" }),"1.vtp")
       //setTimeout(() => { ; }, 200);
       
@@ -76742,8 +76741,10 @@ a.link {
 
         }
         ); 
+        var pSimTime = xmlDoc.evaluate('//organ[@type="seed" and @subType="0"]/parameter[@name="simulationTime"]/@value', xmlDoc, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+        simTime =  pSimTime.singleNodeValue.value ;
         XMLParameter = new XMLSerializer().serializeToString(xmlDoc.documentElement);
-        console.log(xmlDoc);
+        //console.log(xmlDoc);
          }  
 
     }catch(e){
@@ -76758,8 +76759,7 @@ a.link {
     
     simParamName = url.split("/").slice(-1)[0];
     console.log("load Paramter url is : " +url);
-    simTime = time;
-    document.getElementById("simTimeInput").value = time;
+
     
     
     const myRequest = new Request(url);
@@ -76824,13 +76824,13 @@ a.link {
     const urlRoute = window.location.href.split("#");
 			    switch (urlRoute.slice(-1)[0]) {
                     case urlRoute[0]:
-                    loadParameter("public/sympodial_dichasium.xml", "180");
+                    loadParameter("public/monopodial.xml", simTime);
                     break;
                     case "":
-                    loadParameter("public/sympodial_dichasium.xml", "180");
+                    loadParameter("public/monopodial.xml", simTime);
                     break;
                     default:
-                    loadParameter(urlRoute.slice(-1)[0], "180");
+                    loadParameter(urlRoute.slice(-1)[0], simTime);
 			    }
           
   }
