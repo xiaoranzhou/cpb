@@ -31,23 +31,7 @@ a.link {
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item dropdown">
-              <button id="paramDropdown" class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Parameters
-            </button>
-              <ul id="params" class="dropdown-menu">
-                <li><input class="dropdown-item form-control" onchange="uploadParamRun()"  id="uploadParam" type="file" ></input></li>
-                <li><hr class="dropdown-divider"></li>
-                <li><button class="dropdown-item " id="ParamEditorButton" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#Paramoffcanvas" aria-controls="Paramoffcanvas">Parameter Editor</button></li>
-                <li><hr class="dropdown-divider"></li>
-               
 
-
-                
-              </ul>
-            </li>
 
             <form class="nav-item d-flex align-items-center">
 
@@ -62,6 +46,23 @@ a.link {
 
             <li class="nav-item">
               <button class="nav-link" id="vtpDownloadButton" onclick="saveButton()">Download VTP</button>
+            </li>
+            <li class="nav-item dropdown">
+              <button id="paramDropdown" class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Parameters
+              </button>
+              <ul id="params" class="dropdown-menu">
+                <li><input class="dropdown-item form-control" onchange="uploadParamRun()"  id="uploadParam" type="file" ></input></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><button class="dropdown-item " id="ParamEditorButton" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#Paramoffcanvas" aria-controls="Paramoffcanvas">Parameter Editor</button></li>
+                <li><hr class="dropdown-divider"></li>
+               
+
+
+                
+              </ul>
             </li>
             <li class="nav-item">
               <button class="nav-link" style="cursor: pointer"  onclick="startOrStop()" id="rotationButton" >Rotation</button>
@@ -93,7 +94,7 @@ a.link {
 
 
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="Paramoffcanvas"
-    aria-labelledby="offcanvasScrollingLabel" style=" width:35vw; top: 10vh; height: 85vh; border-radius:0px 15px  15px 0px;">
+    aria-labelledby="offcanvasScrollingLabel" style=" width:33vw; top: 10vh; height: 85vh; border-radius:0px 15px  15px 0px;">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Parameter editor</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -119,7 +120,7 @@ a.link {
   </div>
 
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="XMLoffcanvas"
-    aria-labelledby="XMLEditorLabel" style="width:35vw; top: 10vh; height: 85vh; border-radius:0px 15px  15px 0px;">
+    aria-labelledby="XMLEditorLabel" style="width:33vw; top: 10vh; height: 85vh; border-radius:0px 15px  15px 0px;">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="XMLEditorLabel">XML editor</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -76615,12 +76616,14 @@ a.link {
 var steps = [{
 			        title: "Hi, welcome to CPlantBox WASM tool",
 			        content: `
-                <span class="h3"> Let&#39;s simulate plants with a few clicks.<br> Please click the parameters: </p> <p>
+                <span class="h3"> Let&#39;s simulate plants with a single click.<br> click the parameters to change plant: </p> <p>
                 1. <a id="myLink1" href="#public/leaf_alternate.xml"  >leaf alternate </a><br> 
                 2. <a id="myLink2" href="#public/leaf_opposite_decussate.xml"  >leaf opposite decussate</a> <br>
-                3. <a id="myLink2" href="#public/leaf_spiral.xml" > leaf spiral</a> <br>
+                3. <a id="myLink3" href="#public/leaf_spiral.xml" > leaf spiral</a> <br>
                 4. <a id="myLink4" href="#public/sympodial_monochasium.xml"  >sympodial monochasium</a> <br>
-                5. <a id="myLink3" href="#public/sympodial_dichasium.xml"  >sympodial dichasium</a> ; </span>
+                5. <a id="myLink5" href="#public/sympodial_dichasium.xml"  >sympodial dichasium</a> ; <br>
+                6. <a id="myLink6" href="#public/monopodial.xml"  >monopodial</a> ; <br>
+                7. <a id="myLink7" href="#public/logo_plant.xml"  >plant with leaf shapes</a> ; </span>
                 `
 			        //
 			    }, {
