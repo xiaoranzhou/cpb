@@ -23,34 +23,35 @@ a.link {
     cursor: pointer !important;
 }
 </style>
-<body style="background-color: black;    background-image: none ;">
-  <div class="container text-center" style="background-color: black; ">
-    <nav class="navbar navbar-dark navbar-expand-lg  row" style="background-color: #000000;">
-      <div class="container-fluid">
-        <button class="navbar-brand btn btn-dark" >CPlantBox WebAssembly</button>
+<body style="background-color: black; width:100vw; height:100vh; overflow: clip;  background-image: none ;">
+  <div class="row " style="background-color: black; ">
+    <nav class="navbar navbar-dark navbar-expand-lg" style="background-color: #000000;">
+      <div class="container-md d-flex justify-content-end">
+        <button class="navbar-brand btn btn-dark" >CPlantBox WASM</button>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <div class="collapse navbar-collapse " id="navbarSupportedContent">
+          
+          <ul class="navbar-nav  mb-2 mb-lg-0 d-flex justify-content-end">
+           
 
-
-            <form class="nav-item d-flex align-items-center">
+            <form class="nav-item d-flex justify-content-end">
 
               <label for="simTimeInput" class="me-2 nav-link">Simulation time</label>
               <input class="form-control-sm " id="simTimeInput" type="text"
                 onchange="simTime=this.value; " placeholder="10" onkeydown=" if (event.keyCode == 13){event.preventDefault(),runSimulation( XMLParameter, this.value); }";>
             </form>
 
-            <li class="nav-item">
+            <li class="nav-item d-flex justify-content-end">
               <button class="nav-link" id="simButton"  onclick='loadingModal1.show();runSimulation( XMLParameter, simTime); '>Run Simulation</button>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item d-flex justify-content-end">
               <button class="nav-link" id="vtpDownloadButton" onclick="saveButton()">Download VTP</button>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown d-flex justify-content-end">
               <button id="paramDropdown" class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 Parameters
@@ -67,7 +68,7 @@ a.link {
                 
               </ul>
             </li>
-            <li class="nav-item">
+            <li class="nav-item d-flex justify-content-end">
               <button class="nav-link" style="cursor: pointer"  onclick="startOrStop()" id="rotationButton" >Rotation</button>
             </li>
           </ul>
@@ -97,7 +98,7 @@ a.link {
 
 
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="Paramoffcanvas"
-    aria-labelledby="offcanvasScrollingLabel" style=" width:33vw; top: 10vh; height: 85vh; border-radius:0px 15px  15px 0px;">
+    aria-labelledby="offcanvasScrollingLabel" style=" width:40vw; top: 10vh; height: 85vh; border-radius:0px 15px  15px 0px;">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Parameter editor</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -123,7 +124,7 @@ a.link {
   </div>
 
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="XMLoffcanvas"
-    aria-labelledby="XMLEditorLabel" style="width:33vw; top: 10vh; height: 85vh; border-radius:0px 15px  15px 0px;">
+    aria-labelledby="XMLEditorLabel" style="width:40vw; top: 10vh; height: 85vh; border-radius:0px 15px  15px 0px;">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="XMLEditorLabel">XML editor</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -76619,7 +76620,7 @@ a.link {
 var steps = [{
 			        title: "Hi, welcome to CPlantBox WASM tool",
 			        content: `
-                <span class="h3"> Let&#39;s simulate plants with a single click.<br> click the parameters to change plant: </p> <p>
+                <span class="h4"> Let&#39;s simulate plants with a single click.<br> click the parameters to change plant: </p> <p>
                 1. <a id="myLink1" href="#public/leaf_alternate.xml"  >leaf alternate </a><br> 
                 2. <a id="myLink2" href="#public/leaf_opposite_decussate.xml"  >leaf opposite decussate</a> <br>
                 3. <a id="myLink3" href="#public/leaf_spiral.xml" > leaf spiral</a> <br>
