@@ -7316,7 +7316,7 @@ a.link {
           backfaceCulling: !1,
           frontfaceCulling: !1,
           pointSize: 1,
-          lineWidth: 1,
+          lineWidth: 8,
           lighting: !0,
           shading: !1,
           materialName: null,
@@ -37151,7 +37151,7 @@ a.link {
                 4 === B_.fps.length && W_.setOrientation(B_.fps[3])),
               W_.setRenderWindow(P_),
               W_.setContainer(e),
-              D_.setResizeCallback(W_.update));//closeModal();
+              D_.setResizeCallback(W_.update));
         }
         function K_(e, t) {
           const n = document.createElement("select");
@@ -37255,7 +37255,7 @@ a.link {
               .map((e) => ({
                 label: `(c) ${e.getName()}`,
                 value: `CellData:${e.getName()}`,
-              }))
+              }))          
           );} else {
             x = [{ value: ":", label: "Solid Color" },{ value: ":", label: "Solid Color" }];
 
