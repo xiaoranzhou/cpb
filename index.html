@@ -23,10 +23,10 @@ a.link {
     cursor: pointer !important;
 }
 </style>
-<body style="background-color: black; width:100vw; height:100vh; overflow: clip;  background-image: none ;">
-  <div class="row " style="background-color: black; ">
+<body style="background-color: black;   background-image: none ;">
+  <div class="" style="background-color: black;    position: absolute; top:calc( 0% );left: 50%;transform: translate(-50%, 0%); ">
     <nav class="navbar navbar-dark navbar-expand-lg" style="background-color: #000000;">
-      <div class="container-md d-flex justify-content-end">
+      
         <button class="navbar-brand btn btn-dark" >CPlantBox WASM</button>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,7 +84,7 @@ a.link {
             </button>
           </form-->
         </div>
-      </div>
+      
     </nav>
     <input type="file" id="VTPInput2" multiple="" accept=".vtp" style="display: none;">
 
@@ -94,7 +94,7 @@ a.link {
 
 
   </div>
-  <div class="content GeometryViewer-module-fullScreen_RWlQz" style="height: calc(100vh - 56px); width: 100%; position: static;"></div>
+  <div class="content GeometryViewer-module-fullScreen_RWlQz" style="height: calc(100vh - 56px); width: 100vw; position: static;"></div>
 
 
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="Paramoffcanvas"
@@ -147,7 +147,7 @@ a.link {
   </button>
 
   <!-- Modal -->
-  <div class="modal " id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true">
+  <div class="modal " id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true" style="height:100vh;width:100vw">
     <div class="modal-dialog ">
       <div class="modal-content">
         <div class="modal-header">
@@ -32717,7 +32717,7 @@ a.link {
           Object.assign(t, Iv, r),
             _v.extend(e, t, r),
             (t.canvas = document.createElement("canvas")),
-            (t.canvas.style.width = "100%"),
+            (t.canvas.style.width = "100vw"),
             Dv(),
             t.selector ||
             ((t.selector = iv.newInstance()),
@@ -35298,7 +35298,7 @@ a.link {
               : {};
           Object.assign(t, Kb, r),
             (t.canvas = document.createElement("canvas")),
-            (t.canvas.style.width = "100%"),
+            (t.canvas.style.width = "100vw"),
             (t.bgImage = new Image()),
             (t.bgImage.style.position = "absolute"),
             (t.bgImage.style.left = "0"),
@@ -76343,8 +76343,8 @@ a.link {
           e.id,
           `\n\n.GeometryViewer-module-rootController_uBiGG 
               {\n  display: flex;\n  flex-direction: column;\n  position: absolute;\n bottom: 5px;\n  left: 5px;\n  right: 5px;\n  z-index: 1;\n}\n\n
-                .GeometryViewer-module-control_LaXi4 {\n  display: flex; \n margin:auto;\n  flex-direction: row;\n  flex: 1;\n  align-items: center;\n}\n\n
-                .GeometryViewer-module-fullScreen_RWlQz {\n  position: absolute;\n  width: 100vw;\n  height: 100vh;\n  top: 0;\n  left: 0;\n  overflow: hidden;\n  background: black;\n  margin: 0;\n  padding: 0;\n  z-index: -1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n
+                .GeometryViewer-module-control_LaXi4 {\n  width: 100vw;\n  display: flex; \n margin:auto;\n  flex-direction: row;\n  flex: 1;\n  align-items: center;\n}\n\n
+                .GeometryViewer-module-fullScreen_RWlQz {\n  position: absolute;\n  width: 100vw;\n  height: calc(100vh - 56px);\n  top: 0;\n  left: 0;\n  overflow: hidden;\n  background: black;\n  margin: 0;\n  padding: 0;\n  z-index: -1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n
                 .GeometryViewer-module-fullParentSize_LzcO5 {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  overflow: hidden;\n}\n\n
                 .GeometryViewer-module-bigFileDrop_taNXL {\n  position: absolutope;\n  left: 50%;\n  t: 50%;\n  transform: translate(-50%, -50%);\n  background-color: black;\n  
                 background-image: url(` +
@@ -76625,9 +76625,9 @@ var steps = [{
                 2. <a id="myLink2" href="#public/leaf_opposite_decussate.xml"  >leaf opposite decussate</a> <br>
                 3. <a id="myLink3" href="#public/leaf_spiral.xml" > leaf spiral</a> <br>
                 4. <a id="myLink4" href="#public/sympodial_monochasium.xml"  >sympodial monochasium</a> <br>
-                5. <a id="myLink5" href="#public/sympodial_dichasium.xml"  >sympodial dichasium</a> ; <br>
-                6. <a id="myLink6" href="#public/monopodial.xml"  >monopodial</a> ; <br>
-                7. <a id="myLink7" href="#public/logo_plant.xml"  >plant with leaf shapes</a> ; </span>
+                5. <a id="myLink5" href="#public/sympodial_dichasium.xml"  >sympodial dichasium</a> <br>
+                6. <a id="myLink6" href="#public/monopodial.xml"  >monopodial</a> <br>
+                7. <a id="myLink7" href="#public/logo_plant.xml"  >plant with leaf shapes</a> </span>
                 `
 			        //
 			    }, {
@@ -76739,7 +76739,9 @@ var steps = [{
   function runSimulation(text, simTime = simTime) {
     try {
       showModal();
+      
       initParameditor(text);
+      
       clearInterval(interval);
       let status = document.getElementById("statusText");
       status.innerText = "";
@@ -76750,7 +76752,7 @@ var steps = [{
       setTimeout(() => { callMain([simParamName, simTime]); loadVTP()  }, 0);
       
       const Parameditor = new bootstrap.Offcanvas('#Paramoffcanvas');
-      Parameditor.show();
+      if (window.innerWidth > 1000) Parameditor.show();
       document.getElementById("simTimeInput").value = simTime;
       //saveData(FS.readFile("output.vtp", { encoding: "utf8" }),"1.vtp")
       //setTimeout(() => { ; }, 200);
