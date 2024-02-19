@@ -64,8 +64,6 @@ a.link {
                 <li><hr class="dropdown-divider"></li>
                
 
-
-                
               </ul>
             </li>
             <li class="nav-item d-flex justify-content-end">
@@ -165,6 +163,20 @@ a.link {
 
         </div>
       </div>
+    </div>
+  </div>
+
+
+  <div class="toast align-items-center top-0 start-50 translate-middle-x position-absolute" style="z-index:9999;" role="alert" aria-live="assertive" aria-atomic="true" id="XMLTo">
+    <div class="d-flex">
+      <div class="toast-body">
+        XML parameter upload successful, 
+        <div class="mt-2 pt-2 border-top">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="runSimulation( XMLParameter,simTime)">Run simulation</button>
+          <button type="button" class="btn  btn-sm" data-bs-dismiss="toast">Close</button>
+        </div>
+      </div>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
   </div>
 
@@ -76850,6 +76862,8 @@ var steps = [{
         initParameditor(XMLParameter);
         const Parameditor = new bootstrap.Offcanvas('#Paramoffcanvas');
         Parameditor.show();
+        const XMLToast = bootstrap.Toast.getOrCreateInstance(document.getElementById("XMLTo"));
+        XMLToast.show();
       }
       reader.readAsArrayBuffer(file);
     }
@@ -76861,7 +76875,7 @@ var steps = [{
 
 
 
-    const urlRoute = window.location.href.split("#");
+          const urlRoute = window.location.href.split("#");
 			    switch (urlRoute.slice(-1)[0]) {
                     case urlRoute[0]:
                     loadParameter("public/monopodial.xml", simTime);
@@ -76889,7 +76903,10 @@ var steps = [{
   });
   addEventListener("hashchange", (event) => {
 
+    if (document.getElementById("uploadParam").files.length == 0){
       urlAccess();
+    }
+      
 
     
 

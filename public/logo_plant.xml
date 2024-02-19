@@ -154,7 +154,7 @@
     <parameter name="a" value="0.1" dev="0.002"/>
     <parameter name="RotBeta" value="1"/>
     <parameter name="BetaDev" value="0"/>
-    <parameter name="InitBeta" value="1"/>
+    <parameter name="InitBeta" value="1.57089"/>
     <parameter name="tropismT" value="1"/>
     <parameter name="tropismN" value="3"/>
     <parameter name="tropismS" value="0"/>
