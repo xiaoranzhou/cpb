@@ -251,7 +251,7 @@ a.link {
   </div>
 
 
-  <div class="toast align-items-center top-0 start-50 translate-middle-x position-absolute" style="z-index:9999;" role="alert" aria-live="assertive" aria-atomic="true" id="XMLTo">
+  <div class="toast align-items-center m-5 top-0 start-50 translate-middle-x position-absolute" data-bs-delay="10000" style="z-index:9999;" role="alert" aria-live="assertive" aria-atomic="true" id="XMLTo">
     <div class="d-flex">
       <div class="toast-body">
         XML parameter upload successful, 
@@ -264,12 +264,28 @@ a.link {
     </div>
   </div>
 
+  <div class="toast align-items-center m-5 top-0 start-50 translate-middle-x position-absolute" data-bs-delay="10000" style="z-index:9999;" role="alert" aria-live="assertive" aria-atomic="true" id="URLTo">
+    <div class="d-flex">
+      <div class="toast-body" >
+        Parameter has been changed by URL.
+        <br>
+        <span id="URLToContent" > </span>
+        <div class="mt-2 pt-2 border-top">
+          <button type="button" class="btn btn-secondary btn-sm" onclick='window.location.replace("https://xrzhou.com/cpb");'>Reset URL parameters</button>
+          <button type="button" class="btn  btn-sm" data-bs-dismiss="toast">Close</button>
+        </div>
+      </div>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+
+
 </body>
 <script type="text/javascript">
   var browserName;
   var simParamName = "leaf.xml";
   var simTime = "180";
-  var interval;
+  var rotationInterval;
   var distance;
   /*! For license information please see GeometryViewer.js.LICENSE.txt */
   !(function () {
@@ -37292,7 +37308,7 @@ a.link {
             (u.innerHTML = G_ === rx.MobileAR ? "Start AR" : "Start VR");
           const c = document.createElement("div");
           c.setAttribute("class", E_.control),
-            c.appendChild(l),
+            //c.appendChild(l),
             //c.appendChild(o),
             c.appendChild(n),
             c.appendChild(i),
@@ -37464,11 +37480,11 @@ a.link {
             W_.update(), 
             closeModal() ;
           function startOrStop(boole){
-            if ((interval != 0) ||  (boole==0)){
-              clearInterval(interval);
-              interval = 0;
+            if ((rotationInterval != 0) ||  (boole==0)){
+              clearInterval(rotationInterval);
+              rotationInterval = 0;
             }else{
-              interval = setInterval(function() {
+              rotationInterval = setInterval(function() {
                 xxx = xxx + 1;
                 // const S = Rt(P_.render, 10);
                 // p.onModified(S, -1),
@@ -76439,7 +76455,7 @@ a.link {
           e.id,
           `\n\n.GeometryViewer-module-rootController_uBiGG 
               {\n  display: flex;\n  flex-direction: column;\n  position: absolute;\n bottom: 5px;\n  left: 5px;\n  right: 5px;\n  z-index: 1;\n}\n\n
-                .GeometryViewer-module-control_LaXi4 {\n  width: 100vw;\n  display: flex; \n margin:auto;\n  flex-direction: row;\n  flex: 1;\n  align-items: center;\n}\n\n
+                .GeometryViewer-module-control_LaXi4 {\n  ;\n  display: flex; \n margin:auto;\n  flex-direction: row;\n  flex: 1;\n  align-items: center;\n}\n\n
                 .GeometryViewer-module-fullScreen_RWlQz {\n  position: absolute;\n  width: 100vw;\n  height: calc(100vh - 56px);\n  top: 0;\n  left: 0;\n  overflow: hidden;\n  background: black;\n  margin: 0;\n  padding: 0;\n  z-index: -1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n
                 .GeometryViewer-module-fullParentSize_LzcO5 {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  overflow: hidden;\n}\n\n
                 .GeometryViewer-module-bigFileDrop_taNXL {\n  position: absolutope;\n  left: 50%;\n  t: 50%;\n  transform: translate(-50%, -50%);\n  background-color: black;\n  
@@ -76716,14 +76732,14 @@ a.link {
 var steps = [{
 			        title: "Hi, welcome to CPlantBox WASM tool",
 			        content: `
-                <span class="h4"> Let&#39;s simulate plants with a single click.<br> click the parameters to change plant: </p> <p>
-                1. <a id="myLink1" href="#public/leaf_alternate.xml"  >leaf alternate </a><br> 
-                2. <a id="myLink2" href="#public/leaf_opposite_decussate.xml"  >leaf opposite decussate</a> <br>
-                3. <a id="myLink3" href="#public/leaf_spiral.xml" > leaf spiral</a> <br>
-                4. <a id="myLink4" href="#public/sympodial_monochasium.xml"  >sympodial monochasium</a> <br>
-                5. <a id="myLink5" href="#public/sympodial_dichasium.xml"  >sympodial dichasium</a> <br>
-                6. <a id="myLink6" href="#public/monopodial.xml"  >monopodial</a> <br>
-                7. <a id="myLink7" href="#public/logo_plant.xml"  >plant with leaf shapes</a> </span>
+                <span class="h4"> Let&#39;s click the the following links to change the plant shape: </p> <p>
+                1. <a id="myLink7" href="#public/logo_plant.xml" data-bs-toggle="tooltip" title="Single straight stem plant with four leaves." > plant with four leaves</a> </span>
+                2. <a id="myLink2" href="#public/leaf_opposite_decussate.xml" data-bs-toggle="tooltip" title="Plant with opposite leaves at each node"  >leaf opposite decussate</a> <br>
+                3. <a id="myLink3" href="#public/leaf_spiral.xml" data-bs-toggle="tooltip" title="Plant with leaves arranged in a spiral pattern" > leaf spiral</a> <br>
+                4. <a id="myLink1" href="#public/leaf_alternate.xml" data-bs-toggle="tooltip" title="Plant with leaves alternately arranged on the stem"  >leaf alternate </a><br> 
+                5. <a id="myLink5" href="#public/sympodial_dichasium.xml" data-bs-toggle="tooltip" title="Plant with branching pattern where two buds arise from a single point, and the younger bud continues the main stem growth"  >sympodial dichasium</a> <br>
+                6. <a id="myLink6" href="#public/monopodial.xml" data-bs-toggle="tooltip" title="Plant with a single main stem that continues to grow throughout its life"  >monopodial</a> <br>
+                7. <a id="myLink4" href="#public/sympodial_monochasium.xml" data-bs-toggle="tooltip" title="Plant with branching pattern where a single bud arises from a point, and this bud becomes the main stem"  >sympodial monochasium</a> <br>
                 `
 			        //
 			    }, {
@@ -76791,6 +76807,17 @@ var steps = [{
   }
 
   function initParameditor(text) {
+
+    try {
+            if (validateXML(text)) {
+              console.log("Valid XML");
+            } else {
+              console.error("Invalid XML");
+            }
+          } catch (error) {
+            console.error("Error:", error.message);
+          }
+
     var editor = document.getElementById("ParamEditor");
     let parser = new DOMParser();
     xmlDoc = parser.parseFromString(text, "text/xml");
@@ -76838,10 +76865,10 @@ var steps = [{
       
       initParameditor(text);
       
-      clearInterval(interval);
+      clearInterval(rotationInterval);
       let status = document.getElementById("statusText");
       status.innerText = "";
-      interval = 0;
+      rotationInterval = 0;
       XMLParameter =text;
       FS.writeFile(simParamName, text);
       document.getElementById("XMLEditor").innerText= text;
@@ -76870,11 +76897,11 @@ var steps = [{
           const param1 = element.split("=");
           const param10 = param1[0].split(",");
           const xpathText = '//organ[@type="'+param10[0]+'" and @subType="'+param10[1]+'"]/parameter[@name="'+param10[2]+'"]/@value';
-          console.log(xpathText);
+          //console.log(xpathText);
           var paramElement = xmlDoc.evaluate(xpathText, xmlDoc, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
           paramElement.singleNodeValue.value = param1[1];
-          console.log(paramElement.singleNodeValue.value);
-
+          //console.log(paramElement.singleNodeValue.value);
+          URLToast("The value of parameter: "+ param10[0] + " organ ; subType: " + param10[1] + "; name: " + param10[2] +" has been changed to "+ param1[1]);
         }
         ); 
         var pSimTime = xmlDoc.evaluate('//organ[@type="seed" and @subType="0"]/parameter[@name="simulationTime"]/@value', xmlDoc, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
@@ -76932,6 +76959,13 @@ var steps = [{
     return browser;
   }
   
+  function URLToast(text){
+    const XMLToast = bootstrap.Toast.getOrCreateInstance(document.getElementById("URLTo"));
+    document.getElementById("URLToContent").innerText= text;
+    XMLToast.show();
+
+  }
+
   function uploadParamRun(){
     const file = document.getElementById("uploadParam").files[0];
     simParamName = file.name;
@@ -76954,23 +76988,23 @@ var steps = [{
 
   }
   function urlAccess(){
-    
-    
-
-
-
+          
           const urlRoute = window.location.href.split("#");
-			    switch (urlRoute.slice(-1)[0]) {
+          const para = urlRoute.slice(-1)[0];
+			    switch (para) {
                     case urlRoute[0]:
                     loadParameter("public/monopodial.xml", simTime);
-                    tour.show()
+                    URLToast("default parameter is used");
+                    tour.show();
                     break;
                     case "":
                     loadParameter("public/monopodial.xml", simTime);
-                    tour.show()
+                    URLToast("default parameter is used");
+                    tour.show();
                     break;
                     default:
-                    loadParameter(urlRoute.slice(-1)[0], simTime);
+                    loadParameter(para, simTime);
+                    URLToast("parameter file"+ para  + " is used");
 			    }
           
   }
@@ -76982,21 +77016,74 @@ var steps = [{
       alert("Firefox only support single color visualization. \n Please click run simulation after the HEAP 8 Error message. \n We have better support on Chrome, Edge, Opera or Safari")
     } 
     urlAccess();
-          
-   
   });
   addEventListener("hashchange", (event) => {
 
     if (document.getElementById("uploadParam").files.length == 0){
       urlAccess();
-    }
-      
-
-    
-
-
-
+    }      
   });
+
+  function validateXML(xmlString) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(xmlString, "text/xml");
+
+  // Check root element name and attributes
+  if (doc.documentElement.tagName !== "Plant" ||
+      //doc.documentElement.getAttribute("name") !== "PMA2018_new" ||
+      doc.documentElement.getAttribute("filetype") !== "parameters") {
+    return false;
+  }
+
+  // Check for required child elements
+  const requiredElements = ["organ"];
+  const presentElements = [];
+
+  for (const child of doc.documentElement.children) {
+    if (child.tagName === "organ") {
+      presentElements.push(child.tagName);
+      validateOrgan(child);
+    }
+  }
+
+  return requiredElements.every(element => presentElements.includes(element));
+}
+
+function validateOrgan(organElement) {
+  // Check required attributes
+  const requiredAttributes = ["type", "name", "subType"];
+  for (const attribute of requiredAttributes) {
+    if (!organElement.hasAttribute(attribute)) {
+      throw new Error(`Organ element missing required attribute: ${attribute}`);
+    }
+  }
+
+  // Check for required child elements
+  const requiredChildElements = ["parameter"];
+  const presentChildElements = [];
+
+  for (const child of organElement.children) {
+    if (child.tagName === "parameter") {
+      presentChildElements.push(child.tagName);
+      validateParameter(child);
+    }
+  }
+
+  return requiredChildElements.every(element => presentChildElements.includes(element));
+}
+
+function validateParameter(parameterElement) {
+  // Check required attributes
+  const requiredAttributes = ["name"];
+  for (const attribute of requiredAttributes) {
+    if (!parameterElement.hasAttribute(attribute)) {
+      throw new Error(`Parameter element missing required attribute: ${attribute}`);
+    }
+  }
+}
+
+
+
 
 </script>
 
