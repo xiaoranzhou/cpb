@@ -76,13 +76,6 @@ a.link {
   </div>
 
 
-
-  
-
-
-
-
-
   <div class="" style="background-color: black;    position: absolute; top:calc( 0% );left: 50%;transform: translate(-50%, 0%); ">
     <nav class="navbar navbar-dark navbar-expand-lg" style="background-color: #000000;">
       
@@ -114,6 +107,10 @@ a.link {
               Tools
               </button>
               <ul id="tools" class="dropdown-menu">
+                <li class="nav-item " id="colorMenu">  
+                </li>
+                <li class="nav-item " id="attributeMenu">  
+                </li>
                 <li class="nav-item ">
                   <button class="nav-link" id="vtpDownloadButton" onclick="saveButton()">Download VTP</button>
                 </li>
@@ -123,15 +120,9 @@ a.link {
                
                 <li class="nav-item">
                   <button class="nav-link" style="cursor: pointer"  data-bs-toggle="modal" data-bs-target="#aboutModal"  id="aboutButton" >About</button>
-                </li>
-
-                
+                </li>                
               </ul>
             </li>
-
-           
-
-
 
             <li class="nav-item dropdown">
               <button id="paramDropdown" class="nav-link dropdown-toggle"  role="button" data-bs-toggle="dropdown"
@@ -170,13 +161,51 @@ a.link {
     </nav>
     <input type="file" id="VTPInput2" multiple="" accept=".vtp" style="display: none;">
 
-
-      
-
-
-
   </div>
-  <div class="content GeometryViewer-module-fullScreen_RWlQz" style="height: calc(100vh - 56px); width: 100vw; position: static;"></div>
+  <div class="toast-container position-absolute top-0 start-50 translate-middle-x">
+    <div class="toast align-items-center m-5 top-0 start-50 translate-middle-x " data-bs-delay="10000" style="z-index:9999;" role="alert" aria-live="assertive" aria-atomic="true" id="URLTo">
+      <div class="d-flex">
+        <div class="toast-body" >
+          Parameter information:
+          <br>
+          <span id="URLToContent" > </span>
+          <div class="mt-2 pt-2 border-top">
+            <button type="button" class="btn btn-secondary btn-sm" onclick='window.location.replace("https://xrzhou.com/cpb");'>Reset URL parameters</button>
+            <button type="button" class="btn  btn-sm" data-bs-dismiss="toast">Close</button>
+          </div>
+        </div>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+
+    <div class="toast align-items-center m-5 top-0 start-50 translate-middle-x " data-bs-delay="10000" style="z-index:9999;" role="alert" aria-live="assertive" aria-atomic="true" id="URLTo1">
+      <div class="d-flex">
+        <div class="toast-body" >
+          Parameter information:
+          <br>
+          <span id="URLToContent1" > </span>
+          <div class="mt-2 pt-2 border-top">
+            <button type="button" class="btn btn-secondary btn-sm" onclick='window.location.replace("https://xrzhou.com/cpb");'>Reset URL parameters</button>
+            <button type="button" class="btn  btn-sm" data-bs-dismiss="toast">Close</button>
+          </div>
+        </div>
+        <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+  <div class="toast align-items-center m-5 top-0 start-50 translate-middle-x position-absolute" data-bs-delay="10000" style="z-index:9999;" role="alert" aria-live="assertive" aria-atomic="true" id="XMLTo">
+    <div class="d-flex">
+      <div class="toast-body">
+        XML parameter imported successful, 
+        <div class="mt-2 pt-2 border-top">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="runSimulation( XMLParameter,simTime)">Run simulation</button>
+          <button type="button" class="btn  btn-sm" data-bs-dismiss="toast">Close</button>
+        </div>
+      </div>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+  <div class="content row GeometryViewer-module-fullScreen_RWlQz" style="height: 100vh; width: 100vw; position: static;"></div>
 
 
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="Paramoffcanvas"
@@ -251,33 +280,6 @@ a.link {
   </div>
 
 
-  <div class="toast align-items-center m-5 top-0 start-50 translate-middle-x position-absolute" data-bs-delay="10000" style="z-index:9999;" role="alert" aria-live="assertive" aria-atomic="true" id="XMLTo">
-    <div class="d-flex">
-      <div class="toast-body">
-        XML parameter upload successful, 
-        <div class="mt-2 pt-2 border-top">
-          <button type="button" class="btn btn-secondary btn-sm" onclick="runSimulation( XMLParameter,simTime)">Run simulation</button>
-          <button type="button" class="btn  btn-sm" data-bs-dismiss="toast">Close</button>
-        </div>
-      </div>
-      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-  </div>
-
-  <div class="toast align-items-center m-5 top-0 start-50 translate-middle-x position-absolute" data-bs-delay="10000" style="z-index:9999;" role="alert" aria-live="assertive" aria-atomic="true" id="URLTo">
-    <div class="d-flex">
-      <div class="toast-body" >
-        Parameter has been changed by URL.
-        <br>
-        <span id="URLToContent" > </span>
-        <div class="mt-2 pt-2 border-top">
-          <button type="button" class="btn btn-secondary btn-sm" onclick='window.location.replace("https://xrzhou.com/cpb");'>Reset URL parameters</button>
-          <button type="button" class="btn  btn-sm" data-bs-dismiss="toast">Close</button>
-        </div>
-      </div>
-      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-  </div>
 
 
 </body>
@@ -31811,7 +31813,7 @@ a.link {
         };
         const { vtkDebugMacro: Sv, vtkErrorMacro: Cv } = jt,
           Tv = {
-            position: "absolute",
+            position: "static",
             top: 0,
             left: 0,
             width: "100%",
@@ -35453,7 +35455,7 @@ a.link {
           $b = {
             margin: "0",
             padding: "0",
-            position: "absolute",
+            position: "static",
             top: "0",
             left: "0",
             width: "100%",
@@ -35461,7 +35463,7 @@ a.link {
             overflow: "hidden",
           },
           Yb = {
-            position: "absolute",
+            position: "static",
             left: "25px",
             top: "25px",
             backgroundColor: "black",
@@ -37310,8 +37312,8 @@ a.link {
           c.setAttribute("class", E_.control),
             //c.appendChild(l),
             //c.appendChild(o),
-            c.appendChild(n),
-            c.appendChild(i),
+            document.getElementById("colorMenu").appendChild(n),
+            document.getElementById("attributeMenu").appendChild(i),
             c.appendChild(a),
             //c.appendChild(s),
             void 0 !== navigator.xr &&
@@ -37496,7 +37498,7 @@ a.link {
                 const r = O_.getActiveCamera();
                 r.azimuth(0.5),
                 r.setFocalPoint(0,0,-3),
-                r.setViewUp(0,0,1),
+                r.setViewUp(0,0,0.5),
                 r.setViewAngle(20),
                 P_.render(),
                 W_.update();
@@ -76454,11 +76456,11 @@ a.link {
         c.push([
           e.id,
           `\n\n.GeometryViewer-module-rootController_uBiGG 
-              {\n  display: flex;\n  flex-direction: column;\n  position: absolute;\n bottom: 5px;\n  left: 5px;\n  right: 5px;\n  z-index: 1;\n}\n\n
-                .GeometryViewer-module-control_LaXi4 {\n  ;\n  display: flex; \n margin:auto;\n  flex-direction: row;\n  flex: 1;\n  align-items: center;\n}\n\n
-                .GeometryViewer-module-fullScreen_RWlQz {\n  position: absolute;\n  width: 100vw;\n  height: calc(100vh - 56px);\n  top: 0;\n  left: 0;\n  overflow: hidden;\n  background: black;\n  margin: 0;\n  padding: 0;\n  z-index: -1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n
-                .GeometryViewer-module-fullParentSize_LzcO5 {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  overflow: hidden;\n}\n\n
-                .GeometryViewer-module-bigFileDrop_taNXL {\n  position: absolutope;\n  left: 50%;\n  t: 50%;\n  transform: translate(-50%, -50%);\n  background-color: black;\n  
+              {\n  display: block; \n  align-items: center ;\n  flex-direction: column;\n  position: static;\n bottom: 5px;\n  left: 5px;\n  right: 5px;\n  z-index: 1;\n}\n\n
+                .GeometryViewer-module-control_LaXi4 { position: static;\n  ;\n  display: flex; \n margin:auto;\n  flex-direction: row;\n  flex: 1;\n  align-items: center;\n}\n\n
+                .GeometryViewer-module-fullScreen_RWlQz {\n  position: static;\n  width: 100vw;\n  height: calc(100vh - 56px);\n  top: 0;\n  left: 0;\n  overflow: hidden;\n  background: black;\n  margin: 0;\n  padding: 0;\n  z-index: -1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n
+                .GeometryViewer-module-fullParentSize_LzcO5 {\n  position: static;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  overflow: hidden;\n}\n\n
+                .GeometryViewer-module-bigFileDrop_taNXL {\n  position: static;\n  left: 50%;\n  t: 50%;\n  transform: translate(-50%, -50%);\n  background-color: black;\n  
                 background-image: url(` +
           d +
           `);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: contain;\n  border-radius: 10px;\n  width: 50px;\n  padding: calc(50vh - 2em) calc(50vw - 25px - 2em);\n  cursor: pointer;\n}\n\n
@@ -76469,7 +76471,7 @@ a.link {
                 .GeometryViewer-module-dark_paSVP option {\n  color: black;\n}\n\n
                 .GeometryViewer-module-light_kemHx {\n  color: black;\n}\n\n
                 .GeometryViewer-module-light_kemHx option {\n  color: white;\n}\n\n
-                .GeometryViewer-module-fpsMonitor_yHvkR {\n  position: absolute;\n  bottom: 10px;\n  left: 10px;\n  background-color: rgba(0, 0, 0, 0.5);\n  border-radius: 5px;\n  border: solid 1px gray;\n}\n`,
+                .GeometryViewer-module-fpsMonitor_yHvkR {\n  position: static;\n  bottom: 10px;\n  left: 10px;\n  background-color: rgba(0, 0, 0, 0.5);\n  border-radius: 5px;\n  border: solid 1px gray;\n}\n`,
           "",
         ]),
           (c.locals = {
@@ -76733,7 +76735,7 @@ var steps = [{
 			        title: "Hi, welcome to CPlantBox WASM tool",
 			        content: `
                 <span class="h4"> Let&#39;s click the the following links to change the plant shape: </p> <p>
-                1. <a id="myLink7" href="#public/logo_plant.xml" data-bs-toggle="tooltip" title="Single straight stem plant with four leaves." > plant with four leaves</a> </span>
+                1. <a id="myLink7" href="#public/logo_plant.xml" data-bs-toggle="tooltip" title="Single straight stem plant with four leaves." > plant with four leaves</a> </span>  <br>
                 2. <a id="myLink2" href="#public/leaf_opposite_decussate.xml" data-bs-toggle="tooltip" title="Plant with opposite leaves at each node"  >leaf opposite decussate</a> <br>
                 3. <a id="myLink3" href="#public/leaf_spiral.xml" data-bs-toggle="tooltip" title="Plant with leaves arranged in a spiral pattern" > leaf spiral</a> <br>
                 4. <a id="myLink1" href="#public/leaf_alternate.xml" data-bs-toggle="tooltip" title="Plant with leaves alternately arranged on the stem"  >leaf alternate </a><br> 
@@ -76901,7 +76903,7 @@ var steps = [{
           var paramElement = xmlDoc.evaluate(xpathText, xmlDoc, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
           paramElement.singleNodeValue.value = param1[1];
           //console.log(paramElement.singleNodeValue.value);
-          URLToast("The value of parameter: "+ param10[0] + " organ ; subType: " + param10[1] + "; name: " + param10[2] +" has been changed to "+ param1[1]);
+          URLToast1("The value of parameter: "+ param10[0] + " organ ; subType: " + param10[1] + "; name: " + param10[2] +" has been changed to "+ param1[1]);
         }
         ); 
         var pSimTime = xmlDoc.evaluate('//organ[@type="seed" and @subType="0"]/parameter[@name="simulationTime"]/@value', xmlDoc, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
@@ -76966,6 +76968,13 @@ var steps = [{
 
   }
 
+  function URLToast1(text){
+    const XMLToast = bootstrap.Toast.getOrCreateInstance(document.getElementById("URLTo1"));
+    document.getElementById("URLToContent1").innerText= text;
+    XMLToast.show();
+
+  }
+
   function uploadParamRun(){
     const file = document.getElementById("uploadParam").files[0];
     simParamName = file.name;
@@ -76994,17 +77003,17 @@ var steps = [{
 			    switch (para) {
                     case urlRoute[0]:
                     loadParameter("public/monopodial.xml", simTime);
-                    URLToast("default parameter is used");
+                    URLToast("parameter file: public/monopodial.xml is used");
                     tour.show();
                     break;
                     case "":
                     loadParameter("public/monopodial.xml", simTime);
-                    URLToast("default parameter is used");
+                    URLToast("parameter file: public/monopodial.xml is used");
                     tour.show();
                     break;
                     default:
                     loadParameter(para, simTime);
-                    URLToast("parameter file"+ para  + " is used");
+                    URLToast("parameter file: "+ para  + " is used");
 			    }
           
   }
