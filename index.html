@@ -37,9 +37,10 @@ a.link {
         <div class="modal-body"  >
           <h1 id="cplantbox-visualization-tool">CPlantBox Visualization Tool</h1>
           <h2 id="introduction">Introduction</h2>
-          <p>The CPlantBox Visualization Tool is a web-based application designed for the visualization of plant growth simulations. It is part of Xiaoran Zhou&#39;s PhD thesis and opensourced at <a href="https://github.com/xiaoranzhou/cpb">github</a>.</p>
+          <p>The CPlantBox Visualization Tool is a web-based application designed for conduct and visualize plant growth simulations. It is part of Xiaoran Zhou&#39;s PhD thesis and opensourced at <a href="https://github.com/xiaoranzhou/cpb">github</a>.</p>
           <h2 id="features">Features</h2>
           <ul>
+          <li>Use cplantbox web assembly to run CPlantBox on the client-side.</li>
           <li>Interactive simulation of plant growth with a variety of plant parameters.</li>
           <li>Ability to select or upload parameters for simulation.</li>
           <li>Parameter editor for detailed control over simulation inputs.</li>
@@ -297,6 +298,7 @@ a.link {
   var simTime = "180";
   var rotationInterval;
   var distance, timeStep;
+  var firefoxCheck=false;
   /*! For license information please see GeometryViewer.js.LICENSE.txt */
   !(function () {
     var e = {
@@ -9908,20 +9910,36 @@ a.link {
                 let lt = t.lookupTable;
                 window.ltttt = lt; 
                 try{
-                  if(document.getElementById("attributeValue").value==("PointData:time")){
-                    lt.setMappingRange(0, window.timeStep);
+                  if ((browserName != "Firefox")|| ( firefoxCheck == false )){
+                      try{
+                        if(document.getElementById("attributeValue").value==("PointData:time")){
+                          lt.setMappingRange(0, window.timeStep);
+                        }else{
+
+                        }
+                      
+                      }catch(e){
+                        lt.setMappingRange(0, window.timeStep);
+                      }
+                
+                    lt.setUseAboveRangeColor(true),
+                    lt.setAboveRangeColor(0.0, 0.0, 0.0 , 0),
+                    lt.build();
+                    lt.updateRange();
                   }else{
 
                   }
-                
+
                 }catch(e){
-                  lt.setMappingRange(0, window.timeStep);
+                  console.log(e);
+                  lt.setUseAboveRangeColor(true),
+                  lt.setAboveRangeColor(0.0, 0.0, 0.0 , 0),
+                  lt.build();
+                  lt.updateRange();
+
                 }
                 
-                lt.setUseAboveRangeColor(true),
-                lt.setAboveRangeColor(0.0, 0.0, 0.0 , 0),
-                lt.build();
-                lt.updateRange(),
+
                 lt.getVectorMode() === nl.MAGNITUDE &&
                   r.getNumberOfComponents() > 1 &&
                   (s = -1),
@@ -9932,7 +9950,7 @@ a.link {
                     n,
                     s,
                     o,
-                    o,//t.lookupTable.getRange(),
+                    t.lookupTable.getRange(),
                     t.colorTextureMap
                       .getPointData()
                       .getScalars()
@@ -37383,7 +37401,7 @@ a.link {
               const t = Number(e.target.value) / 100;
               m.getProperty().setOpacity(t), P_.render();
             });let x=[];
-          if (browserName != "Firefox"){
+          if ((browserName != "Firefox")|| ( firefoxCheck == false )){
             x = [{ value: "PointData:time", label: "(p) time" },{ value: ":", label: "Solid Color" }].concat(
             f
               .getPointData()
@@ -37448,7 +37466,7 @@ a.link {
             }),
               b();
           };
-          if (browserName != "Firefox"){
+          if ((browserName != "Firefox")|| ( firefoxCheck == false )){
             (i.innerHTML = x
             .map(
               ({ label: e, value: t }) =>
@@ -37501,28 +37519,44 @@ a.link {
           P_.render();
           //console.log("focalPoint is: "+O_.getActiveCamera().getFocalPoint());
           distance = O_.getActiveCamera().getDistance()/2;
-          
           try{
+              if ((browserName != "Firefox")|| ( firefoxCheck == false )){
+                try{
                   if(document.getElementById("attributeValue").value==("PointData:time")){
                     ltttt.setMappingRange(0, window.timeStep);
                   }else{
-                    
+
                   }
                 
                 }catch(e){
-                  ltttt.setMappingRange(0, window.timeStep);
+                      ltttt.setMappingRange(0, window.timeStep);
+                        }
+                  
+                        ltttt.build(),
+                        ltttt.updateRange(),
+                      (r.g.pipeline[e] = {
+                      actor: m,
+                      mapper: h,
+                      source: f,
+                      lookupTable: ltttt, // was p
+                      renderer: O_,
+                      renderWindow: P_,
+                    });
+                }else{
+                  (r.g.pipeline[e] = {
+                        actor: m,
+                        mapper: h,
+                        source: f,
+                        lookupTable:p,
+                        renderer: O_,
+                        renderWindow: P_,
+                      })
+
                 }
-          
-                ltttt.build(),
-                ltttt.updateRange(),
-            (r.g.pipeline[e] = {
-              actor: m,
-              mapper: h,
-              source: f,
-              lookupTable: ltttt, // was p
-              renderer: O_,
-              renderWindow: P_,
-            }),
+        
+              }catch(e){
+
+                }
             O_.getActiveCamera(),
             W_.update(), 
             closeModal() ;
@@ -37531,40 +37565,56 @@ a.link {
               clearInterval(rotationInterval);
               rotationInterval = 0;
             }else{
-              rotationInterval = setInterval(function() {
-                xxx = xxx + 1;
-                // const S = Rt(P_.render, 10);
-                // p.onModified(S, -1),
-                // O_.resetCamera(),
-                // O_.getActiveCamera().setPosition(distance*Math.sin(xxx*3.1415926/400), distance*Math.cos(xxx*3.1415926/400), distance),
-                // O_.getActiveCamera().setFocalPoint(0,0,0),
-                // O_.getActiveCamera().setViewUp(0,0,1),
-                distance = O_.getActiveCamera().getDistance()/2;
-                try{
-                  if(document.getElementById("attributeValue").value==("PointData:time")){
-                    ltttt.setMappingRange(0, window.timeStep);
-                  }else{
+                rotationInterval = setInterval(function() {
+                  xxx = xxx + 1;
+                  // const S = Rt(P_.render, 10);
+                  // p.onModified(S, -1),
+                  // O_.resetCamera(),
+                  // O_.getActiveCamera().setPosition(distance*Math.sin(xxx*3.1415926/400), distance*Math.cos(xxx*3.1415926/400), distance),
+                  // O_.getActiveCamera().setFocalPoint(0,0,0),
+                  // O_.getActiveCamera().setViewUp(0,0,1),
+                  distance = O_.getActiveCamera().getDistance()/2;
+                  try{
+                      if ((browserName != "Firefox")|| ( firefoxCheck == false )){
+                          try{
+                            if(document.getElementById("attributeValue").value==("PointData:time")){
+                              ltttt.setMappingRange(0, window.timeStep);
+                            }else{
+                              
+                            }
+                          
+                          }catch(e){
+                            ltttt.setMappingRange(0, window.timeStep);
+                          }
                     
-                  }
-                
-                }catch(e){
-                  ltttt.setMappingRange(0, window.timeStep);
-                }
-          
-                ltttt.build(),
-                ltttt.updateRange();
-                
-                const r = O_.getActiveCamera();
-                r.azimuth(0.5),
-                
-                //r.setFocalPoint(0,0,-3),
-                r.setViewUp(0,0,0.00001),
-                r.setViewAngle(20),
-                //r.zoom(-10),
-                P_.render(),
-                W_.update();
-                //console.log("rotating at" + xxx+ " distance is"+ distance);
-                }, 40);
+                          ltttt.build(),
+                          ltttt.updateRange();
+                        }else{
+                          const r = O_.getActiveCamera();
+                        r.azimuth(0.5),
+                        
+                        //r.setFocalPoint(0,0,-3),
+                        r.setViewUp(0,0,0.00001),
+                        r.setViewAngle(20),
+                        //r.zoom(-10),
+                        P_.render(),
+                        W_.update();
+                          
+
+
+                        }
+                      }catch(e){console.log(e)
+                        const r = O_.getActiveCamera();
+                        r.azimuth(0.5),
+                        
+                        //r.setFocalPoint(0,0,-3),
+                        r.setViewUp(0,0,0.00001),
+                        r.setViewAngle(20),
+                        //r.zoom(-10),
+                        P_.render(),
+                        W_.update();}
+                        //console.log("rotating at" + xxx+ " distance is"+ distance);
+                 }, 40);
               }
               
           };
@@ -77126,7 +77176,7 @@ var steps = [{
     
     browserName = checkBrowser();
     if (browserName == "Firefox"){
-      alert("Firefox only support single color visualization. \n Please click run simulation after the HEAP 8 Error message. \n We have better support on Chrome, Edge, Opera or Safari")
+      alert("You are using firefox. \n Please use Chrome, Edge, Opera or Safari if possible. \n If you need to use firefox, please enable webgl and webgl2 in the about:config settings. \n There will be a HEAP 8 Error message after this message in firefox. \n If the app still does not work in firefox, pleas use ctrl + F5 to do hard reload. \n ");
     } 
     urlAccess();
   });
@@ -77168,7 +77218,12 @@ var steps = [{
           console.log("attributes changed");
           window.timeStep = parseInt(document.getElementById("BarOut").getAttribute("aria-valuenow"))*(simTime/100 );
           if(rotationInterval == 0) {
+            try{
               refresh();
+            }catch(e){
+
+            }
+              
             }
         }
         
