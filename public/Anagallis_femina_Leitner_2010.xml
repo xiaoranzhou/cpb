@@ -14,7 +14,7 @@
     <parameter name="firstSB" value="1000" dev="0"/>
     <parameter name="delaySB" value="1000" dev="0"/>
     <parameter name="delayRC" value="1000" dev="0"/>
-    <parameter name="simulationTime" value="15" dev="0"/>
+    <parameter name="simulationTime" value="56" dev="0"/>
 </organ>
 
 <organ type="root" name="taproot" subType="1">
