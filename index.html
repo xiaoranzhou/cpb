@@ -9907,7 +9907,17 @@ a.link {
                 let s = t.lookupTable.getVectorComponent();
                 let lt = t.lookupTable;
                 window.ltttt = lt; 
-                lt.setMappingRange(0, window.timeStep),
+                try{
+                  if(document.getElementById("attributeValue").value==("PointData:time")){
+                    lt.setMappingRange(0, window.timeStep);
+                  }else{
+
+                  }
+                
+                }catch(e){
+                  lt.setMappingRange(0, window.timeStep);
+                }
+                
                 lt.setUseAboveRangeColor(true),
                 lt.setAboveRangeColor(0.0, 0.0, 0.0 , 0),
                 lt.build();
@@ -37329,7 +37339,7 @@ a.link {
           c.setAttribute("class", E_.control),
             //c.appendChild(l),
             //c.appendChild(o),
-            
+            i.setAttribute("id", "attributeValue")
             document.getElementById("colorMenu").replaceChildren(n),
             document.getElementById("attributeMenu").replaceChildren(i),
             //c.appendChild(a),
@@ -37491,7 +37501,18 @@ a.link {
           P_.render();
           //console.log("focalPoint is: "+O_.getActiveCamera().getFocalPoint());
           distance = O_.getActiveCamera().getDistance()/2;
-          ltttt.setMappingRange(0, window.timeStep),
+          
+          try{
+                  if(document.getElementById("attributeValue").value==("PointData:time")){
+                    ltttt.setMappingRange(0, window.timeStep);
+                  }else{
+                    
+                  }
+                
+                }catch(e){
+                  ltttt.setMappingRange(0, window.timeStep);
+                }
+          
                 ltttt.build(),
                 ltttt.updateRange(),
             (r.g.pipeline[e] = {
@@ -37519,7 +37540,17 @@ a.link {
                 // O_.getActiveCamera().setFocalPoint(0,0,0),
                 // O_.getActiveCamera().setViewUp(0,0,1),
                 distance = O_.getActiveCamera().getDistance()/2;
-                ltttt.setMappingRange(0, window.timeStep),
+                try{
+                  if(document.getElementById("attributeValue").value==("PointData:time")){
+                    ltttt.setMappingRange(0, window.timeStep);
+                  }else{
+                    
+                  }
+                
+                }catch(e){
+                  ltttt.setMappingRange(0, window.timeStep);
+                }
+          
                 ltttt.build(),
                 ltttt.updateRange();
                 
@@ -76914,6 +76945,10 @@ var steps = [{
         return new Promise(resolve => setTimeout(resolve, ms));
     }
     async function grow() {
+     try{
+      document.getElementById("attributeValue").value="PointData:time";
+      document.getElementById("attributeValue").dispatchEvent(new Event("change"));
+     } catch(e){}
         if (1 <19999999){
             for (i=0; i<101; i++){
 
@@ -77105,6 +77140,11 @@ var steps = [{
   }
 
   document.getElementById("BarIn").addEventListener("mousemove", (event) => {
+    if (document.getElementById("attributeValue").value!="PointData:time"){
+      document.getElementById("attributeValue").value="PointData:time";
+      document.getElementById("attributeValue").dispatchEvent(new Event("change"));
+
+    }
     mousePos(event)
   });
 
@@ -77112,6 +77152,11 @@ var steps = [{
 
 
   document.getElementById("BarOut").addEventListener("mousemove", (event) => {
+    if (document.getElementById("attributeValue").value!="PointData:time"){
+      document.getElementById("attributeValue").value="PointData:time";
+      document.getElementById("attributeValue").dispatchEvent(new Event("change"));
+
+    }
     mousePos(event)
   });
   
