@@ -89,13 +89,13 @@ Tour.prototype.createContent = function() {
 Tour.prototype.addBackdrop = function() {
     var backdrop = document.getElementsByClassName("modal-backdrop");
 
-    if (backdrop.length === 0) {
-        var body = document.getElementsByTagName("body")[0];
-        var backdropElement = document.createElement('div');
-        backdropElement.classList.add("modal-backdrop", "show");
-        body.appendChild(backdropElement);
+    // if (backdrop.length === 0) {
+    //     var body = document.getElementsByTagName("body")[0];
+    //     var backdropElement = document.createElement('div');
+    //     backdropElement.classList.add("modal-backdrop", "show");
+    //     body.appendChild(backdropElement);
 
-    }
+    // }
 }
 
 Tour.prototype.removeBackdrop = function() {

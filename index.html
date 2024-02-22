@@ -26,55 +26,7 @@ a.link {
 <body style="background-color: black;   background-image: none ;">
 
 
-  <!-- Modal -->
-  <div class="modal " id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true" style="height:100vh;width:100vw">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="aboutModalLabel"> About this</h1>
-          <button type="button" class="btn-close" id="aboutModalClose" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body"  >
-          <h1 id="cplantbox-visualization-tool">CPlantBox Visualization Tool</h1>
-          <h2 id="introduction">Introduction</h2>
-          <p>The CPlantBox Visualization Tool is a web-based application designed for conduct and visualize plant growth simulations. It is part of Xiaoran Zhou&#39;s PhD thesis and opensourced at <a href="https://github.com/xiaoranzhou/cpb">github</a>.</p>
-          <h2 id="features">Features</h2>
-          <ul>
-          <li>Use cplantbox web assembly to run CPlantBox on the client-side.</li>
-          <li>Interactive simulation of plant growth with a variety of plant parameters.</li>
-          <li>Ability to select or upload parameters for simulation.</li>
-          <li>Parameter editor for detailed control over simulation inputs.</li>
-          <li>Simulation time input for controlling the duration of the simulation.</li>
-          <li>Rotation control to view the plant model from different angles.</li>
-          <li>Downloadable VTP (Visualization Toolkit Polygon) output of the plant model.</li>
-          <li>Guided tour for new users to learn how to use the tool.</li>
-          </ul>
-          <h2 id="usage">Usage</h2>
-          <p>To use the tool, follow these steps:</p>
-          <ol>
-          <li>Visit the hosted page at <a href="http://xrzhou.com/cpb">xrzhou.com/cpb</a>.</li>
-          <li>Choose from a list of clickable plant parameter options or upload your own.</li>
-          <li>Input the desired simulation time.</li>
-          <li>Use the rotation control to view the plant model from different angles.</li>
-          <li>Click the simulation button to start the simulation.</li>
-          <li>Download the VTP file of the plant model after simulation.</li>
-          </ol>
-          <h2 id="technical-details">Technical Details</h2>
-          <p>The tool is implemented in JavaScript and WebAssembly, compiled from the wasm branch of the CPlantBox GitHub repository.</p>
-          <h2 id="browser-compatibility">Browser Compatibility</h2>
-          <p>The tool is optimized for Chrome, Edge, Opera, or Safari. Firefox users may experience limited functionality.</p>
-          <h2 id="license">License</h2>
-          <p>This project is licensed under the GPL-3.0 license.</p>
-          <h2 id="contact">Contact</h2>
-          <p>For any inquiries or support related to the CPlantBox Visualization Tool, please contact Xiaoran Zhou at zxrzxr@gmail.com.</p>
-          
-        </div>
-        <div class="modal-footer">
-
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
 
   <div class="" style="background-color: black;    position: absolute; top:calc( 0% );left: 50%;transform: translate(-50%, 0%); ">
@@ -200,7 +152,7 @@ a.link {
     </div>
     
   </div>
-  <div class="toast align-items-center m-5 top-0 start-50 translate-middle-x position-absolute" data-bs-delay="10000" style="z-index:9999;" role="alert" aria-live="assertive" aria-atomic="true" id="XMLTo">
+  <div class="toast align-items-center m-5 top-0 start-50 translate-middle-x position-absolute" data-bs-delay="10000" style="z-index:999;" role="alert" aria-live="assertive" aria-atomic="true" id="XMLTo">
     <div class="d-flex">
       <div class="toast-body">
         XML parameter imported successful, 
@@ -265,7 +217,55 @@ a.link {
   <button type="button" id="modalButton" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#loadingModal">
     loading screen
   </button>
+<!-- Modal -->
+<div class="modal " id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true" style="height:100vh;width:100vw">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="aboutModalLabel"> About this</h1>
+        <button type="button" class="btn-close" id="aboutModalClose" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body"  >
+        <h1 id="cplantbox-visualization-tool">CPlantBox Visualization Tool</h1>
+        <h2 id="introduction">Introduction</h2>
+        <p>The CPlantBox Visualization Tool is a web-based application designed for conduct and visualize plant growth simulations. It is part of Xiaoran Zhou&#39;s PhD thesis and opensourced at <a href="https://github.com/xiaoranzhou/cpb">github</a>.</p>
+        <h2 id="features">Features</h2>
+        <ul>
+        <li>Use cplantbox web assembly to run CPlantBox on the client-side.</li>
+        <li>Interactive simulation of plant growth with a variety of plant parameters.</li>
+        <li>Ability to select or upload parameters for simulation.</li>
+        <li>Parameter editor for detailed control over simulation inputs.</li>
+        <li>Simulation time input for controlling the duration of the simulation.</li>
+        <li>Rotation control to view the plant model from different angles.</li>
+        <li>Downloadable VTP (Visualization Toolkit Polygon) output of the plant model.</li>
+        <li>Guided tour for new users to learn how to use the tool.</li>
+        </ul>
+        <h2 id="usage">Usage</h2>
+        <p>To use the tool, follow these steps:</p>
+        <ol>
+        <li>Visit the hosted page at <a href="http://xrzhou.com/cpb">xrzhou.com/cpb</a>.</li>
+        <li>Choose from a list of clickable plant parameter options or upload your own.</li>
+        <li>Input the desired simulation time.</li>
+        <li>Use the rotation control to view the plant model from different angles.</li>
+        <li>Click the simulation button to start the simulation.</li>
+        <li>Download the VTP file of the plant model after simulation.</li>
+        </ol>
+        <h2 id="technical-details">Technical Details</h2>
+        <p>The tool is implemented in JavaScript and WebAssembly, compiled from the wasm branch of the CPlantBox GitHub repository.</p>
+        <h2 id="browser-compatibility">Browser Compatibility</h2>
+        <p>The tool is optimized for Chrome, Edge, Opera, or Safari. Firefox users may experience limited functionality.</p>
+        <h2 id="license">License</h2>
+        <p>This project is licensed under the GPL-3.0 license.</p>
+        <h2 id="contact">Contact</h2>
+        <p>For any inquiries or support related to the CPlantBox Visualization Tool, please contact Xiaoran Zhou at zxrzxr@gmail.com.</p>
+        
+      </div>
+      <div class="modal-footer">
 
+      </div>
+    </div>
+  </div>
+</div>
   <!-- Modal -->
   <div class="modal " id="loadingModal" tabindex="-1" aria-labelledby="loadingModalLabel" aria-hidden="true" style="height:100vh;width:100vw">
     <div class="modal-dialog ">
@@ -37579,6 +37579,15 @@ a.link {
                           try{
                             if(document.getElementById("attributeValue").value==("PointData:time")){
                               ltttt.setMappingRange(0, window.timeStep);
+                              const r = O_.getActiveCamera();
+                              r.azimuth(0.5),
+                              
+                              //r.setFocalPoint(0,0,-3),
+                              r.setViewUp(0,0,0.00001),
+                              r.setViewAngle(20),
+                              //r.zoom(-10),
+                              P_.render(),
+                              W_.update();
                             }else{
                               
                             }
@@ -76875,17 +76884,21 @@ var steps = [{
 			        //
 			    }, {
 			        id: "paramDropdown",
-			        content: "<span class='h4'>Here parameters can be seleted or uploaded. <br> The parameter editor is also here.</span>"
+			        content: "<span class='h4'>Parameter menu list the options for parameters to be seleted or uploaded. <br> The parameter editor is also here.</span>"
 			    }, {
 			        id: "simTimeInput",
-			        content: "<span class='h4'>Here you can give the simulation time parameter.</span>"
+			        content: "<span class='h4'>The input field near time can be used to give the simulation time.</span>"
 			    }, {
 			        id: "rotationButton",
-			        content: "<span class='h4'>Click here to stop or resume the rotation.</span>"
+			        content: "<span class='h4'>Rotation button can be used to toggle stop or resume the rotation.</span>"
 			    }, {
-			        id: "vtpDownloadButton",
-			        content: "<span class='h4'>Here you can download VTP output of the model.</span>"
+			        id: "toolsDropdown",
+			        content: "<span class='h4'>Tools menu can be used to change color, run growth animation or download VTP output of the model.</span>"
 			    }, {
+			        id: "BarOut",
+			        content: "<span class='h4'>Progress bar can be hovered to choose the timestep to show.</span>"
+			    },
+          {
 			        id: "simButton",
 			        content: "<span class='h4'>Click here to run the simulation.</span>"
 			    },
