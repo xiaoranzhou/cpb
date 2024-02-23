@@ -16,23 +16,25 @@ fetch(fetchFile)
   .then((text) => {
     const fileList = JSON.parse(text);
     for (const [index, element] of fileList.entries()) {
-      const fetchFile = new Request("public/" + element);
-      fetch(fetchFile)
-        .then(handleErrors)
-        .then((response) => response.blob())
-        .then((myBlob) => myBlob.text())
-        .then((text) => {
-          FS.writeFile(element, text);
-          document.getElementById("params").innerHTML = document
-            .getElementById("params")
-            .innerHTML.concat(
-              `<li><a class="dropdown-item"  href='#public/` +
-                element +
-                `' >` +
-                element +
-                "</a></li>"
-            );
-        });
+      const params = document.getElementById("params");
+      params.innerHTML = params.innerHTML.concat(
+        `<li><a class="dropdown-item"  href='#public/` +
+          element +
+          `' >` +
+          element +
+          "</a></li>"
+      );
+      
+      
+      // const fetchFile = new Request("public/" + element);
+      // fetch(fetchFile)
+      //   .then(handleErrors)
+      //   .then((response) => response.blob())
+      //   .then((myBlob) => myBlob.text())
+      //   .then((text) => {
+      //     FS.writeFile(element, text);
+
+      //   });
     }
   });
 }catch(error){

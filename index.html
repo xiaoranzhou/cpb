@@ -11,6 +11,7 @@
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/bs5-intro-tour.js" type="text/javascript" charset="utf-8"></script>
 <link href="css/bs5-intro-tour.css" rel="stylesheet" />	
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
 <script src="cpb.js"></script>
 <style>
 .accordion{
@@ -24,10 +25,6 @@ a.link {
 }
 </style>
 <body style="background-color: black;   background-image: none ;">
-
-
-  
-
 
   <div class="" style="background-color: black;    position: absolute; top:calc( 0% );left: 50%;transform: translate(-50%, 0%); ">
     <nav class="navbar navbar-dark navbar-expand-lg" style="background-color: #000000;">
@@ -65,6 +62,10 @@ a.link {
                 <li class="nav-item " id="attributeMenu">  
                 </li>
                 <li class="nav-item " id="opacityMenu">  
+                </li>
+                <li class="nav-item " id="lineWidthMenu"> 
+                  <input class="GeometryViewer-module-dark_paSVP GeometryViewer-module-selector_lZA7U" onChange="window.lineWidth = this.value;" type="range" value="10" max="10" min="1" id="lineBar">
+                  <label style="color: #FFFFFF8C;" for="lineBar">Line Width</label>
                 </li>
                 <li class="nav-item "  id="growMenu"> 
                   <button class="nav-link" id="vtpDownloadButton" onclick="grow()">Growth Animation</button>  
@@ -120,7 +121,7 @@ a.link {
     <input type="file" id="VTPInput2" multiple="" accept=".vtp" style="display: none;">
 
   </div>
-  <div class="toast-container position-absolute top-0 start-50">
+  <div class="toast-container position-absolute top-0" style="left: 70vw">
     <div class="toast align-items-center m-5 top-0 start-50 translate-middle-x " data-bs-delay="10000" style="z-index:999;" role="alert" aria-live="assertive" aria-atomic="true" id="URLTo">
       <div class="d-flex">
         <div class="toast-body" >
@@ -151,7 +152,7 @@ a.link {
       </div>
     </div>
     
-  </div>
+  
   <div class="toast align-items-center m-5 top-0 start-50 translate-middle-x position-absolute" data-bs-delay="10000" style="z-index:999;" role="alert" aria-live="assertive" aria-atomic="true" id="XMLTo">
     <div class="d-flex">
       <div class="toast-body">
@@ -164,13 +165,29 @@ a.link {
       <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
   </div>
+
+  <div class="toast align-items-center m-5 top-0 start-50 translate-middle-x " data-bs-autohide="false" data-bs-delay="50000" style="z-index:999;" role="alert" aria-live="assertive" aria-atomic="true" id="QRTo">
+    <div class="d-flex">
+      <div class="toast-body align-items-center" >
+        Scan it to simulate the plant
+        <div id="qrcode" ></div>
+        <div class="mt-2 pt-2 border-top">
+      
+          <button type="button" class="btn  btn-sm" data-bs-dismiss="toast">Close</button>
+        </div>
+      </div>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+
+</div>
   <div class="content row GeometryViewer-module-fullScreen_RWlQz" style="height:  calc(100vh-30px); width: 100vw; position: static;"></div>
 
   <div class="progress" id="BarOut" role="progressbar" style="height :30px;" aria-label="Animated striped example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
     <div id="BarIn" class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
   </div>
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="Paramoffcanvas"
-    aria-labelledby="offcanvasScrollingLabel" style=" width:40vw; top: 10vh; height: 85vh; border-radius:0px 15px  15px 0px;">
+    aria-labelledby="offcanvasScrollingLabel" style=" width:40vw; top: 7.5vh; height: 85vh; border-radius:0px 15px  15px 0px;">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Parameter editor</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -196,7 +213,7 @@ a.link {
   </div>
 
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="XMLoffcanvas"
-    aria-labelledby="XMLEditorLabel" style="width:40vw; top: 10vh; height: 85vh; border-radius:0px 15px  15px 0px;">
+    aria-labelledby="XMLEditorLabel" style="width:40vw; top: 7.5vh; height: 85vh; border-radius:0px 15px  15px 0px;">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="XMLEditorLabel">XML editor</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -296,9 +313,10 @@ a.link {
   var browserName;
   var simParamName = "leaf.xml";
   var simTime = "180";
+  var lineWidth = 6;
   var rotationInterval;
   var distance, timeStep;
-  var firefoxCheck=false;
+  var firefoxCheck = false;
   /*! For license information please see GeometryViewer.js.LICENSE.txt */
   !(function () {
     var e = {
@@ -7440,7 +7458,7 @@ a.link {
           backfaceCulling: !1,
           frontfaceCulling: !1,
           pointSize: 1,
-          lineWidth: 6,
+          lineWidth: window.lineWidth,
           lighting: !0,
           shading: !1,
           materialName: null,
@@ -13524,9 +13542,9 @@ a.link {
                         a,
                         0,
                         t.CABO.getElementCount(),
-                        2 * Math.ceil(n.getProperty().getLineWidth())
+                        2 * Math.ceil(window.lineWidth )//n.getProperty().getLineWidth())
                       ))
-                    : (l.lineWidth(n.getProperty().getLineWidth()),
+                    : (l.lineWidth(window.lineWidth ),//n.getProperty().getLineWidth()),
                       e.updateShaders(r, n, i),
                       l.drawArrays(a, 0, t.CABO.getElementCount()),
                       l.lineWidth(1));
@@ -13597,7 +13615,7 @@ a.link {
                   o.usize,
                   o.vsize
                 );
-                const t = parseFloat(n.getProperty().getLineWidth()),
+                const t = parseFloat(window.lineWidth),//n.getProperty().getLineWidth()),
                   r = t / 2;
                 e
                   .getProgram()
@@ -37314,7 +37332,7 @@ a.link {
         }
         function K_(e, t) {
           const n = document.createElement("select");
-          n.setAttribute("class", F_),
+          n.setAttribute("class", F_+" nav-link"),
             (n.innerHTML = Gm.rgbPresetNames
               .map(
                 (e) =>
@@ -37338,8 +37356,9 @@ a.link {
               )
               .join("")),
             (o.value = "1:2:0");
+          
           const i = document.createElement("select");
-          i.setAttribute("class", F_);
+          i.setAttribute("class", F_+" nav-link");
           const a = document.createElement("select");
           a.setAttribute("class", F_), (a.style.display = "none");
           const s = document.createElement("input");
@@ -37348,6 +37367,11 @@ a.link {
             s.setAttribute("value", "100"),
             s.setAttribute("max", "100"),
             s.setAttribute("min", "1");
+            s.setAttribute("id", "opBar");
+          const label = document.createElement("label");
+          label.innerText = "Opacity";
+          label.setAttribute("style", "color: #FFFFFF8C;" ),
+          label.setAttribute("for", "opBar" );
           const l = document.createElement("label");
           l.setAttribute("class", F_), (l.innerHTML = e);
           const u = document.createElement("button");
@@ -37361,7 +37385,7 @@ a.link {
             document.getElementById("colorMenu").replaceChildren(n),
             document.getElementById("attributeMenu").replaceChildren(i),
             //c.appendChild(a),
-            document.getElementById("opacityMenu").replaceChildren(s),
+            document.getElementById("opacityMenu").replaceChildren(s);
             void 0 !== navigator.xr &&
             N_.getXrSupported() &&
             null !== G_ &&
@@ -37381,6 +37405,7 @@ a.link {
             g = f.getPointData().getScalars(),
             y = [].concat(g ? g.getRange() : [0, 1]);
           let v = ka;
+          document.getElementById("opacityMenu").appendChild(label);
 
           function b() {
             const e = Gm.getPresetByName(n.value);
@@ -37560,6 +37585,17 @@ a.link {
             O_.getActiveCamera(),
             W_.update(), 
             closeModal() ;
+          function rotation(){
+            const r = O_.getActiveCamera();
+                        r.azimuth(0.5),
+                        
+                        r.setFocalPoint(0,0,-3),
+                        r.setViewUp(0,0,0.00001),
+                        r.setViewAngle(20),
+                        //r.zoom(-10),
+                        P_.render(),
+                        W_.update();
+          }
           function startOrStop(boole){
             if ((rotationInterval != 0) ||  (boole==0)){
               clearInterval(rotationInterval);
@@ -37579,49 +37615,27 @@ a.link {
                           try{
                             if(document.getElementById("attributeValue").value==("PointData:time")){
                               ltttt.setMappingRange(0, window.timeStep);
-                              const r = O_.getActiveCamera();
-                              r.azimuth(0.5),
-                              
-                              //r.setFocalPoint(0,0,-3),
-                              r.setViewUp(0,0,0.00001),
-                              r.setViewAngle(20),
-                              //r.zoom(-10),
-                              P_.render(),
-                              W_.update();
+                              ltttt.build(),
+                              ltttt.updateRange();
+                              rotation()
                             }else{
+                              
+                              rotation()
                               
                             }
                           
                           }catch(e){
                             ltttt.setMappingRange(0, window.timeStep);
+                            rotation()
                           }
-                    
-                          ltttt.build(),
-                          ltttt.updateRange();
-                        }else{
-                          const r = O_.getActiveCamera();
-                        r.azimuth(0.5),
-                        
-                        //r.setFocalPoint(0,0,-3),
-                        r.setViewUp(0,0,0.00001),
-                        r.setViewAngle(20),
-                        //r.zoom(-10),
-                        P_.render(),
-                        W_.update();
                           
+                        }else{
 
 
                         }
                       }catch(e){console.log(e)
-                        const r = O_.getActiveCamera();
-                        r.azimuth(0.5),
-                        
-                        //r.setFocalPoint(0,0,-3),
-                        r.setViewUp(0,0,0.00001),
-                        r.setViewAngle(20),
-                        //r.zoom(-10),
-                        P_.render(),
-                        W_.update();}
+                        rotation()
+                      }
                         //console.log("rotating at" + xxx+ " distance is"+ distance);
                  }, 40);
               }
@@ -76605,7 +76619,7 @@ a.link {
                 .GeometryViewer-module-selector_lZA7U {\n  background: transparent;\n  border: none;\n  margin: 5px;\n  z-index: 1;\n  max-width: 50vw;\n  min-width: 100px;\n}\n\nlabel
                 .GeometryViewer-module-selector_lZA7U {\n  font-size: 12px;\n  text-overflow: ellipsis;\n  overflow: hidden;\n}\n\nselect:focus {\n  outline: none;\n  border: none;\n}\n\n
                 .GeometryViewer-module-progress_LIQPI {\n  flex: none;\n  font-size: 50px;\n  color: white;\n  z-index: 1;\n  background: rgba(128,128,128,.5);\n  padding: 20px;\n  border-radius: 10px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n          user-select: none;\n}\n\n
-                .GeometryViewer-module-dark_paSVP {\n  color: white;\n}\n\n
+                .GeometryViewer-module-dark_paSVP {\n  color: #FFFFFF8C;\n}\n\n
                 .GeometryViewer-module-dark_paSVP option {\n  color: black;\n}\n\n
                 .GeometryViewer-module-light_kemHx {\n  color: black;\n}\n\n
                 .GeometryViewer-module-light_kemHx option {\n  color: white;\n}\n\n
@@ -76975,7 +76989,7 @@ var steps = [{
       var elementParamters = [].slice.call(element.children);
       htmlText += `<div class="accordion-item">
                   <h2 class="accordion-header">
-                    <button class="accordion-button " type="button" data-bs-toggle="collapse" 
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" 
                     data-bs-target="#collapseOne`+ index + `" aria-expanded="true" aria-controls="collapseOne` + index + `">
                     `+ element.getAttribute("type") + `, SubType ` + element.getAttribute("subType") + `
                     </button>
@@ -77170,17 +77184,31 @@ var steps = [{
 			    switch (para) {
                     case urlRoute[0]:
                     loadParameter("public/monopodial.xml", simTime);
-                    URLToast("parameter file: public/monopodial.xml is used");
-                    tour.show();
+                    
+                    if (window.innerWidth > 1000) {
+                      URLToast("parameter file: public/monopodial.xml is used");
+                      tour.show();
+                      const XMLToast = bootstrap.Toast.getOrCreateInstance(document.getElementById("QRTo"));
+                      XMLToast.show();
+                    }
                     break;
                     case "":
                     loadParameter("public/monopodial.xml", simTime);
-                    URLToast("parameter file: public/monopodial.xml is used");
-                    tour.show();
+                   
+                    if (window.innerWidth > 1000){ tour.show();
+                      URLToast("parameter file: public/monopodial.xml is used");
+                      const XMLToast = bootstrap.Toast.getOrCreateInstance(document.getElementById("QRTo"));
+                      XMLToast.show();
+                    }
                     break;
                     default:
                     loadParameter(para, simTime);
-                    URLToast("parameter file: "+ para  + " is used");
+                    if (window.innerWidth > 1000) {
+                      URLToast("parameter file: "+ para  + " is used");
+                      const XMLToast = bootstrap.Toast.getOrCreateInstance(document.getElementById("QRTo"));
+                      XMLToast.show();
+
+                  }
 			    }
           
   }
@@ -77315,7 +77343,14 @@ function validateParameter(parameterElement) {
   }
 }
 
-
+const qrcode = new QRCode(document.getElementById('qrcode'), {
+  text: window.location.href,
+  width: 200,
+  height: 200,
+  colorDark : '#000',
+  colorLight : '#6f42c1',
+  correctLevel : QRCode.CorrectLevel.H
+});
 
 
 </script>
