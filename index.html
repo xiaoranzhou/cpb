@@ -6,7 +6,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
-<link rel="stylesheet" href="" />
+<meta name="The CPlantBox Visualization Tool is a web-based application designed for the visualization of plant growth simulations. It is part of Xiaoran Zhou's PhD thesis. The CPlantBox was compiled in web assembly (wasm) and can be directly excuted in the browser">
 <link href="css/bootstrap.min.css" rel="stylesheet" />
 <script src="js/bootstrap.bundle.min.js"></script>
 <script src="js/bs5-intro-tour.js" type="text/javascript" charset="utf-8"></script>
@@ -47,7 +47,7 @@ a.link {
             </form>
           </li>
             <li class="nav-item">
-              <button class="nav-link" id="simButton"  onclick='loadingModal1.show();runSimulation( XMLParameter, simTime); '>Run Simulation</button>
+              <button class="nav-link" id="simButton"  onclick='loadingModal1.show();runSimulation( XMLParameter, simTime); '>Run</button>
             </li>
 
 
@@ -121,7 +121,7 @@ a.link {
     <input type="file" id="VTPInput2" multiple="" accept=".vtp" style="display: none;">
 
   </div>
-  <div class="toast-container position-absolute top-0" style="left: 70vw">
+  <div class="toast-container position-absolute top-0" style="left: 75vw">
     <div class="toast align-items-center m-5 top-0 start-50 translate-middle-x " data-bs-delay="10000" style="z-index:999;" role="alert" aria-live="assertive" aria-atomic="true" id="URLTo">
       <div class="d-flex">
         <div class="toast-body" >
@@ -166,22 +166,12 @@ a.link {
     </div>
   </div>
 
-  <div class="toast align-items-center m-5 top-0 start-50 translate-middle-x " data-bs-autohide="false" data-bs-delay="50000" style="z-index:999;" role="alert" aria-live="assertive" aria-atomic="true" id="QRTo">
-    <div class="d-flex">
-      <div class="toast-body align-items-center" >
-        Scan it to simulate the plant
-        <div id="qrcode" ></div>
-        <div class="mt-2 pt-2 border-top">
-      
-          <button type="button" class="btn  btn-sm" data-bs-dismiss="toast">Close</button>
-        </div>
-      </div>
-      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-  </div>
+ 
 
 </div>
-  <div class="content row GeometryViewer-module-fullScreen_RWlQz" style="height:  calc(100vh-30px); width: 100vw; position: static;"></div>
+
+  <div class="content row GeometryViewer-module-fullScreen_RWlQz" style="height:  calc(100vh-30px); width: 100vw; position: static;">
+  </div>
 
   <div class="progress" id="BarOut" role="progressbar" style="height :30px;" aria-label="Animated striped example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
     <div id="BarIn" class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
@@ -235,6 +225,8 @@ a.link {
     loading screen
   </button>
 <!-- Modal -->
+
+
 <div class="modal " id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true" style="height:100vh;width:100vw">
   <div class="modal-dialog modal-xl modal-dialog-scrollable">
     <div class="modal-content">
@@ -304,7 +296,21 @@ a.link {
       </div>
     </div>
   </div>
-
+  <div class="toast-container position-absolute top-0" style="right: 80px">
+    <div class="toast align-items-center m-0 " data-bs-autohide="false" data-bs-delay="50000" style="width:180px ;z-index:999;" role="alert" aria-live="assertive" aria-atomic="true" id="QRTo">
+      <div class="align-items-center">
+        <div class="toast-head m-1 h5 p-2 align-items-center" >
+          Scan to simulate
+          <button type="button" class="btn-close position-absolute end-0" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body" >
+          
+          <div id="qrcode" ></div>
+        </div>
+        </div>
+    </div>
+  
+  </div>
 
 
 
@@ -76886,7 +76892,7 @@ a.link {
 var steps = [{
 			        title: "Hi, welcome to CPlantBox WASM tool",
 			        content: `
-                <span class="h4"> Let&#39;s click the the following links to change the plant shape: </p> <p>
+                <span class="h4"> Click to change plants: </p> <p>
                 1. <a id="myLink7" href="#public/logo_plant.xml" data-bs-toggle="tooltip" title="Single straight stem plant with four leaves." > plant with four leaves</a> </span>  <br>
                 2. <a id="myLink2" href="#public/leaf_opposite_decussate.xml" data-bs-toggle="tooltip" title="Plant with opposite leaves at each node"  >leaf opposite decussate</a> <br>
                 3. <a id="myLink3" href="#public/leaf_spiral.xml" data-bs-toggle="tooltip" title="Plant with leaves arranged in a spiral pattern" > leaf spiral</a> <br>
@@ -77345,8 +77351,8 @@ function validateParameter(parameterElement) {
 
 const qrcode = new QRCode(document.getElementById('qrcode'), {
   text: window.location.href,
-  width: 200,
-  height: 200,
+  width: 150,
+  height: 150,
   colorDark : '#000',
   colorLight : '#6f42c1',
   correctLevel : QRCode.CorrectLevel.H
