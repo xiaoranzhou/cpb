@@ -23,7 +23,7 @@ body.tour-active-element {
 }
 
 .popover-tour.popover-tour-center {
-  inset: 50% auto auto 76% !important;
+  inset: 65% auto auto 76% !important;
   position: fixed !important;
   -webkit-transform: translate(-50%, -50%) !important;
           transform: translate(-50%, -50%) !important;
