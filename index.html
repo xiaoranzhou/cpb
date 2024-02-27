@@ -76,15 +76,22 @@ a.link {
                   </div>
                 </li>
                 <li class="nav-item "  id="growMenu"> 
-                  <button class="nav-link" id="vtpDownloadButton" onclick="grow()">Growth Animation</button>  
+                  <button class="nav-link" id="growButton" onclick="grow()">Growth Animation</button>  
                 </li>
                 <li class="nav-item ">
                   <button class="nav-link" id="vtpDownloadButton" onclick="saveButton()">Download VTP</button>
                 </li>
                 <li class="nav-item ">
-                  <button class="nav-link" id="vtpDownloadButton" onclick="saveData( XMLParameter , simParamName);">Download XML parameter</button>
+                  <button class="nav-link" id="xmlDownloadButton" onclick="saveData( XMLParameter , simParamName);">Download XML parameter</button>
                 </li>
-               
+                <li class="nav-item ">
+
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" onclick="window.cleanUI=!window.cleanUI" type="checkbox" role="switch" id="cleanUI" checked>
+                    <label class=" nav-item" for="cleanUI">Activate QR code and Tutorial</label>
+                  </div>
+                   
+                </li>
                 <li class="nav-item">
                   <button class="nav-link" style="cursor: pointer"  data-bs-toggle="modal" data-bs-target="#aboutModal"  id="aboutButton" >About</button>
                 </li>                
@@ -140,7 +147,7 @@ a.link {
           <br>
           <span id="URLToContent" > </span>
           <div class="mt-2 pt-2 border-top">
-            <button type="button" class="btn btn-secondary btn-sm" onclick='window.location.replace("https://xrzhou.com/cpb");'>Reset URL parameters</button>
+            <!--button type="button" class="btn btn-secondary btn-sm" onclick='window.location.replace("https://xrzhou.com/cpb");'>Reset URL parameters</button-->
             <button type="button" class="btn  btn-sm" data-bs-dismiss="toast">Close</button>
           </div>
         </div>
@@ -155,7 +162,7 @@ a.link {
           <br>
           <span id="URLToContent1" > </span>
           <div class="mt-2 pt-2 border-top">
-            <button type="button" class="btn btn-secondary btn-sm" onclick='window.location.replace("https://xrzhou.com/cpb");'>Reset URL parameters</button>
+            <!--button type="button" class="btn btn-secondary btn-sm" onclick='window.location.replace("https://xrzhou.com/cpb");'>Reset URL parameters</button-->
             <button type="button" class="btn  btn-sm" data-bs-dismiss="toast">Close</button>
           </div>
         </div>
@@ -334,6 +341,7 @@ a.link {
   var rotationInterval;
   var distance, timeStep;
   var firefoxCheck = false;
+  var cleanUI = true;
   /*! For license information please see GeometryViewer.js.LICENSE.txt */
   !(function () {
     var e = {
@@ -77223,27 +77231,27 @@ var steps = [{
           const para = urlRoute.slice(-1)[0];
 			    switch (para) {
                     case urlRoute[0]:
-                    loadParameter("public/monopodial.xml", simTime);
-                    
-                    if (window.innerWidth > 1000) {
-                      URLToast("parameter file: public/monopodial.xml is used");
-                      tour.show();
-                      const XMLToast = bootstrap.Toast.getOrCreateInstance(document.getElementById("QRTo"));
-                      XMLToast.show();
-                    }
+                      loadParameter("public/monopodial.xml", simTime);
+                      
+                      if ((window.innerWidth > 1000) && !cleanUI) {
+                        URLToast("parameter file: public/monopodial.xml is used");
+                        tour.show();
+                        const XMLToast = bootstrap.Toast.getOrCreateInstance(document.getElementById("QRTo"));
+                        XMLToast.show();
+                      }
                     break;
                     case "":
-                    loadParameter("public/monopodial.xml", simTime);
+                      loadParameter("public/monopodial.xml", simTime);
                    
-                    if (window.innerWidth > 1000){ tour.show();
+                    if ((window.innerWidth > 1000) && !cleanUI){ tour.show();
                       URLToast("parameter file: public/monopodial.xml is used");
                       const XMLToast = bootstrap.Toast.getOrCreateInstance(document.getElementById("QRTo"));
                       XMLToast.show();
                     }
                     break;
                     default:
-                    loadParameter(para, simTime);
-                    if (window.innerWidth > 1000) {
+                      loadParameter(para, simTime);
+                    if ((window.innerWidth > 1000) && !cleanUI) {
                       URLToast("parameter file: "+ para  + " is used");
                       const XMLToast = bootstrap.Toast.getOrCreateInstance(document.getElementById("QRTo"));
                       XMLToast.show();
