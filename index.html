@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <meta charset="UTF-8" />
 <title>CPlantBox Web Assembly</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -23,11 +23,13 @@
 a.link {
     cursor: pointer !important;
 }
-</style>
-<body style="background-color: black;   background-image: none ;">
 
-  <div class="" style="background-color: black;    position: absolute; top:calc( 0% );left: 50%;transform: translate(-50%, 0%); ">
-    <nav class="navbar navbar-dark navbar-expand-lg" style="background-color: #000000;">
+
+</style>
+<body data-bs-theme="light"  style=" background-image: none ;">
+
+  <div class="p-0 m-0" style="   position: absolute; top:calc( 0% );left: 50%;transform: translate(-50%, 0%); ">
+    <nav class="navbar navbar-dark navbar-expand-lg" style="">
       
         <button class="navbar-brand btn btn-dark" >CPlantBox</button>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -66,6 +68,12 @@ a.link {
                 <li class="nav-item " id="lineWidthMenu"> 
                   <input class="GeometryViewer-module-dark_paSVP GeometryViewer-module-selector_lZA7U" onChange="window.lineWidth = this.value;" type="range" value="10" max="10" min="1" id="lineBar">
                   <label style="color: #FFFFFF8C;" for="lineBar">Line Width</label>
+                </li>
+                <li class="nav-item " id="backgroundColor"> 
+                <div class="input-group nav-item "><span class="input-group-text ">Background Color</span>
+              
+                 <input type="color" class="form-control fs-6 nav-item" id="colorPicker" value="#050505" >
+                  </div>
                 </li>
                 <li class="nav-item "  id="growMenu"> 
                   <button class="nav-link" id="vtpDownloadButton" onclick="grow()">Growth Animation</button>  
@@ -320,6 +328,7 @@ a.link {
   var simParamName = "leaf.xml";
   var simTime = "180";
   var lineWidth = 6;
+  var backgroundColor = "#383838";
   var rotationInterval;
   var distance, timeStep;
   var firefoxCheck = false;
@@ -28777,7 +28786,7 @@ a.link {
           for (
             Object.assign(t, _g, r),
             mg.extend(e, t, r),
-            t.background || (t.background = [255, 255, 255, 1]);
+            t.background || (t.background = [0, 0, 0, 1]);
             t.background.length < 3;
 
           )
@@ -31277,7 +31286,7 @@ a.link {
                 e.invokeEvent({ type: "StartEvent" }),
                 (t.originalBackground =
                   t._renderer.getBackgroundByReference()),
-                t._renderer.setBackground(255, 255, 255, 1);
+                t._renderer.setBackground([0.4, 0.4, 0.4, 1]);
               const r = t._openGLRenderWindow.getRenderPasses();
               for (
                 e.beginSelection(), t.currentPass = Wy.MIN_KNOWN_PASS;
@@ -35535,7 +35544,7 @@ a.link {
             position: "static",
             left: "25px",
             top: "25px",
-            backgroundColor: "black",
+            backgroundColor: "gray",
             borderRadius: "5px",
             listStyle: "none",
             padding: "5px 10px",
@@ -35713,7 +35722,7 @@ a.link {
                     .getRenderable()
                     .getRenderers()[0];
                   (t.initBackground = e.getBackground()),
-                    e.setBackground([0, 0, 0, 0]);
+                    e.setBackground([0.4, 0.4, 0.4, 1]);
                 }
                 e.resetXRScene(),
                   t.renderWindow
@@ -37544,12 +37553,20 @@ a.link {
             O_.addActor(m),
             I_.setScalarsToColors(h.getLookupTable());
             var xxx =0;
+            const hexToRgb = hex =>
+              hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i
+                        ,(m, r, g, b) => '#' + r + r + g + g + b + b)
+                    .substring(1).match(/.{2}/g)
+                    .map(x => parseInt(x, 16)/255);
+
           const S = Rt(P_.render, 10);
           p.onModified(S, -1),
           O_.resetCamera(),
+          O_.setBackground(hexToRgb(window.backgroundColor)),
           P_.render();
           //console.log("focalPoint is: "+O_.getActiveCamera().getFocalPoint());
           distance = O_.getActiveCamera().getDistance()/2;
+
           try{
               if ((browserName != "Firefox")|| ( firefoxCheck == false )){
                 try{
@@ -37594,11 +37611,12 @@ a.link {
           function rotation(){
             const r = O_.getActiveCamera();
                         r.azimuth(0.5),
-                        
+                        //O_.setBackground(hexToRgb(window.backgroundColor)),
                         r.setFocalPoint(0,0,-3),
                         r.setViewUp(0,0,0.00001),
                         r.setViewAngle(20),
                         //r.zoom(-10),
+                        
                         P_.render(),
                         W_.update();
           }
@@ -37651,6 +37669,7 @@ a.link {
           startOrStop();
           function refresh(){
             distance = O_.getActiveCamera().getDistance()/2;
+            O_.setBackground(hexToRgb(window.backgroundColor)),
                 ltttt.setMappingRange(0, window.timeStep),
                 ltttt.build(),
                 ltttt.updateRange();
@@ -76616,12 +76635,12 @@ a.link {
           `\n\n.GeometryViewer-module-rootController_uBiGG 
               {\n  display: block; \n  align-items: center ;\n  flex-direction: column;\n  position: static;\n bottom: 5px;\n  left: 5px;\n  right: 5px;\n  z-index: 1;\n}\n\n
                 .GeometryViewer-module-control_LaXi4 { position: static;\n  ;\n  display: flex; \n margin:auto;\n  flex-direction: row;\n  flex: 1;\n  align-items: center;\n}\n\n
-                .GeometryViewer-module-fullScreen_RWlQz {\n  position: static;\n  width: 100vw;\n  height: calc(100vh - 30px);\n  top: 0;\n  left: 0;\n  overflow: hidden;\n  background: black;\n  margin: 0;\n  padding: 0;\n  z-index: -1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n
-                .GeometryViewer-module-fullParentSize_LzcO5 {\n  position: static;\n  width: 100%;\n  height: 100%;\n  top: 0;\n  left: 0;\n  overflow: hidden;\n}\n\n
+                .GeometryViewer-module-fullScreen_RWlQz {\n  position: static;\n  width: 100vw;\n  height: calc(100vh - 30px);\n  top: 0;\n  left: 0;\n  overflow: hidden;\n  background: gray;\n  margin: 0;\n  padding: 0;\n  z-index: -1;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n\n
+                .GeometryViewer-module-fullParentSize_LzcO5 {\n  position: static;\n  width: 100%;\n  height: 100%;\n ; top: 0;\n  left: 0;\n  overflow: hidden;\n}\n\n
                 .GeometryViewer-module-bigFileDrop_taNXL {\n  position: static;\n  left: 50%;\n  t: 50%;\n  transform: translate(-50%, -50%);\n  background-color: black;\n  
                 background-image: url(` +
           d +
-          `);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: contain;\n  border-radius: 10px;\n  width: 50px;\n  padding: calc(50vh - 2em) calc(50vw - 25px - 2em);\n  cursor: pointer;\n}\n\n
+          `);\n  background-repeat: no-repeat;\n  background-position: center;\n  background-size: contain;\n  border-radius: 10px;\n  width: 50px;\n  ;\n  cursor: pointer;\n}\n\n
                 .GeometryViewer-module-selector_lZA7U {\n  background: transparent;\n  border: none;\n  margin: 5px;\n  z-index: 1;\n  max-width: 50vw;\n  min-width: 100px;\n}\n\nlabel
                 .GeometryViewer-module-selector_lZA7U {\n  font-size: 12px;\n  text-overflow: ellipsis;\n  overflow: hidden;\n}\n\nselect:focus {\n  outline: none;\n  border: none;\n}\n\n
                 .GeometryViewer-module-progress_LIQPI {\n  flex: none;\n  font-size: 50px;\n  color: white;\n  z-index: 1;\n  background: rgba(128,128,128,.5);\n  padding: 20px;\n  border-radius: 10px;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n          user-select: none;\n}\n\n
@@ -76949,6 +76968,11 @@ var steps = [{
     let file = new File([FS.readFile("output.vtp", { encoding: "utf8" })], simParamName + ".vtp", { type: ".vtp", lastModified: new Date().getTime() });
     let container = new DataTransfer();
     container.items.add(file);
+    if (file.size > 99999999){
+      window.lineWidth =1;
+    } else{
+      window.lineWidth =6;
+    } ;
     let upload = document.getElementById("VTPInput2");
     upload.files = container.files;
     setTimeout(() => { upload.dispatchEvent(new Event('change', { 'bubbles': true })); }, 150);
@@ -77184,7 +77208,15 @@ var steps = [{
 
   }
   function urlAccess(){
-          
+          document.getElementById('qrcode').innerHTML = "";
+          const qrcode = new QRCode(document.getElementById('qrcode'), {
+            text: window.location.href,
+            width: 150,
+            height: 150,
+            colorDark : '#000',
+            colorLight : '#6f42c1',
+            correctLevel : QRCode.CorrectLevel.H
+          });
           const urlRoute = window.location.href.split("#");
           const para = urlRoute.slice(-1)[0];
 			    switch (para) {
@@ -77226,6 +77258,12 @@ var steps = [{
       alert("You are using firefox. \n Please use Chrome, Edge, Opera or Safari if possible. \n If you need to use firefox, please enable webgl and webgl2 in the about:config settings. \n There will be a HEAP 8 Error message after this message in firefox. \n If the app still does not work in firefox, pleas use ctrl + F5 to do hard reload. \n ");
     } 
     urlAccess();
+  function watchColorPicker(event) {
+    window.backgroundColor = event.target.value;
+    window.refresh();
+  }
+   document.getElementById("colorPicker").addEventListener("input", watchColorPicker, false);
+
   });
 
   function mousePos(event){
@@ -77349,14 +77387,7 @@ function validateParameter(parameterElement) {
   }
 }
 
-const qrcode = new QRCode(document.getElementById('qrcode'), {
-  text: window.location.href,
-  width: 150,
-  height: 150,
-  colorDark : '#000',
-  colorLight : '#6f42c1',
-  correctLevel : QRCode.CorrectLevel.H
-});
+
 
 
 </script>
