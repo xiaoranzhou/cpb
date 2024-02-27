@@ -24,6 +24,22 @@ a.link {
     cursor: pointer !important;
 }
 
+button{
+  color: #FFFFFF8C;
+  background-color: #1a0933;
+  border: 0px
+
+}
+
+label{
+  color: #FFFFFF8C;
+  background-color: #1a0933;
+  border: 0px;
+  padding: 1px 6px 1px 6px
+
+}
+
+
 
 </style>
 <body data-bs-theme="light"  style=" background-image: none ;">
@@ -58,11 +74,34 @@ a.link {
                 aria-expanded="false">
               Tools
               </button>
-              <ul id="tools" class="dropdown-menu">
+              <ul id="tools " class="dropdown-menu">
                 <li class="nav-item " id="colorMenu">  
                 </li>
                 <li class="nav-item " id="attributeMenu">  
                 </li>
+
+                <li class="nav-item "  id="growMenu"> 
+                  <button class="" id="growButton" onclick="grow()">Growth Animation</button>  
+                </li>
+                <li class="nav-item ">
+                  <button class="" id="vtpDownloadButton" onclick="saveButton()">Download VTP</button>
+                </li>
+                <li class="nav-item ">
+                  <button class="" id="xmlDownloadButton" onclick="saveData( XMLParameter , simParamName);">Download XML parameter</button>
+                </li>
+                <li class="nav-item">
+                  <button class="m-0" style="cursor: pointer"  data-bs-toggle="modal" data-bs-target="#aboutModal"  id="aboutButton" >About</button>
+                </li>     
+                <li class="nav-item ">
+
+                  <div class="form-check form-switch">
+                    
+                    <input class="form-check-input m-0" onclick="window.cleanUI=!window.cleanUI" type="checkbox" role="switch" id="cleanUI" checked>
+                    <label class=" " for="cleanUI">Activate QR code and Tutorial</label>
+                  </div>
+                   
+                </li>
+
                 <li class="nav-item " id="opacityMenu">  
                 </li>
                 <li class="nav-item " id="lineWidthMenu"> 
@@ -70,31 +109,11 @@ a.link {
                   <label style="color: #FFFFFF8C;" for="lineBar">Line Width</label>
                 </li>
                 <li class="nav-item " id="backgroundColor"> 
-                <div class="input-group nav-item "><span class="input-group-text ">Background Color</span>
+                <div class="input-group"><label class="" for="colorPicker">Background Color</label>
               
                  <input type="color" class="form-control fs-6 nav-item" id="colorPicker" value="#050505" >
                   </div>
                 </li>
-                <li class="nav-item "  id="growMenu"> 
-                  <button class="nav-link" id="growButton" onclick="grow()">Growth Animation</button>  
-                </li>
-                <li class="nav-item ">
-                  <button class="nav-link" id="vtpDownloadButton" onclick="saveButton()">Download VTP</button>
-                </li>
-                <li class="nav-item ">
-                  <button class="nav-link" id="xmlDownloadButton" onclick="saveData( XMLParameter , simParamName);">Download XML parameter</button>
-                </li>
-                <li class="nav-item ">
-
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" onclick="window.cleanUI=!window.cleanUI" type="checkbox" role="switch" id="cleanUI" checked>
-                    <label class=" nav-item" for="cleanUI">Activate QR code and Tutorial</label>
-                  </div>
-                   
-                </li>
-                <li class="nav-item">
-                  <button class="nav-link" style="cursor: pointer"  data-bs-toggle="modal" data-bs-target="#aboutModal"  id="aboutButton" >About</button>
-                </li>                
               </ul>
             </li>
 
@@ -116,7 +135,7 @@ a.link {
             <li class="nav-item ">
               <button class="nav-link" style="cursor: pointer"  onclick="startOrStop()" id="rotationButton" >Rotation</button>
             </li>
-
+            
            
           </ul>
           <!--form class="d-flex" role="search">
