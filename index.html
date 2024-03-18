@@ -96,7 +96,7 @@ label{
 
                   <div class="form-check form-switch">
                     
-                    <input class="form-check-input m-0" onclick="window.cleanUI=!window.cleanUI" type="checkbox" role="switch" id="cleanUI" checked>
+                    <input class="form-check-input m-0" onclick="window.cleanUI=!window.cleanUI; window.localStorage.setItem('cleanUI',window.cleanUI )" type="checkbox" role="switch" id="cleanUI" checked>
                     <label class=" " for="cleanUI">Activate QR code and Tutorial</label>
                   </div>
                    
@@ -332,8 +332,8 @@ label{
       </div>
     </div>
   </div>
-  <div class="toast-container position-absolute top-0" style="right: 80px">
-    <div class="toast align-items-center m-0 " data-bs-autohide="false" data-bs-delay="50000" style="width:180px ;z-index:999;" role="alert" aria-live="assertive" aria-atomic="true" id="QRTo">
+  <div class="toast-container position-absolute" style="right: 100px; top: 80px">
+    <div class="toast align-items-center m-0 " data-bs-autohide="false" data-bs-delay="50000" style="width:390px ;z-index:999;" role="alert" aria-live="assertive" aria-atomic="true" id="QRTo">
       <div class="align-items-center">
         <div class="toast-head m-1 h5 p-2 align-items-center" >
           Scan to simulate
@@ -356,11 +356,15 @@ label{
   var simParamName = "leaf.xml";
   var simTime = "180";
   var lineWidth = 6;
-  var backgroundColor = "#383838";
+  var backgroundColor = "#000000";
   var rotationInterval;
   var distance, timeStep;
   var firefoxCheck = false;
-  var cleanUI = true;
+  //var cleanUI = true;
+  if (window.localStorage.getItem("cleanUI") === undefined){
+    window.localStorage.setItem("cleanUI", true);
+  }
+  var cleanUI = Boolean( window.localStorage.getItem("cleanUI")==="true");
   /*! For license information please see GeometryViewer.js.LICENSE.txt */
   !(function () {
     var e = {
@@ -17898,9 +17902,9 @@ label{
               fontFamily: "serif",
             },
             generateTicks: null,
-            drawNanAnnotation: !0,
-            drawBelowRangeSwatch: !0,
-            drawAboveRangeSwatch: !0,
+            drawNanAnnotation: !1,
+            drawBelowRangeSwatch: !1,
+            drawAboveRangeSwatch: !1,
             ...e,
           };
         }
@@ -37524,7 +37528,9 @@ label{
                     .map((e) => `<option value="${e[1]}">${e[0]}</option>`)
                     .join(""));
               } else a.style.display = "none";
-              I_.setAxisLabel(r), I_.setVisibility(!0);
+              if ( (r =="time")||(r =="age")||(r =="creationTime" )){const r1 = r+" (days)"; I_.setAxisLabel(r1), I_.setVisibility(!0);}
+              else{{ I_.setAxisLabel(r), I_.setVisibility(!0);}};
+              
             } else (a.style.display = "none"), I_.setVisibility(!1);
             h.set({
               colorByArrayName: r,
@@ -77240,8 +77246,8 @@ var steps = [{
           document.getElementById('qrcode').innerHTML = "";
           const qrcode = new QRCode(document.getElementById('qrcode'), {
             text: window.location.href,
-            width: 150,
-            height: 150,
+            width: 365,
+            height: 365,
             colorDark : '#000',
             colorLight : '#6f42c1',
             correctLevel : QRCode.CorrectLevel.H
