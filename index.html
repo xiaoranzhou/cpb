@@ -96,7 +96,7 @@ label{
 
                   <div class="form-check form-switch">
                     
-                    <input class="form-check-input m-0" onclick="window.cleanUI=!window.cleanUI; window.localStorage.setItem('cleanUI',window.cleanUI )" type="checkbox" role="switch" id="cleanUI" checked>
+                    <input class="form-check-input" onclick="window.cleanUI=Number(!Boolean( parseInt(window.cleanUI))); window.localStorage.setItem('cleanUI',window.cleanUI )" type="checkbox" role="switch" id="cleanUI">
                     <label class=" " for="cleanUI">Activate QR code and Tutorial</label>
                   </div>
                    
@@ -332,7 +332,7 @@ label{
       </div>
     </div>
   </div>
-  <div class="toast-container position-absolute" style="right: 100px; top: 80px">
+  <div class="toast-container position-absolute" style="right: 100px; top: 280px">
     <div class="toast align-items-center m-0 " data-bs-autohide="false" data-bs-delay="50000" style="width:390px ;z-index:999;" role="alert" aria-live="assertive" aria-atomic="true" id="QRTo">
       <div class="align-items-center">
         <div class="toast-head m-1 h5 p-2 align-items-center" >
@@ -361,10 +361,13 @@ label{
   var distance, timeStep;
   var firefoxCheck = false;
   //var cleanUI = true;
-  if (window.localStorage.getItem("cleanUI") === undefined){
-    window.localStorage.setItem("cleanUI", true);
+  if ((window.localStorage.getItem("cleanUI") != "0" )&&(window.localStorage.getItem("cleanUI") != "1" )){
+    window.localStorage.setItem("cleanUI", "1");
   }
-  var cleanUI = Boolean( window.localStorage.getItem("cleanUI")==="true");
+  var cleanUI = Number(Boolean( window.localStorage.getItem("cleanUI")==="1"));
+  if (cleanUI=== 1 ){
+    document.getElementById("cleanUI").checked = true;
+  }else{document.getElementById("cleanUI").checked = false;}
   /*! For license information please see GeometryViewer.js.LICENSE.txt */
   !(function () {
     var e = {
